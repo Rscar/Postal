@@ -3,52 +3,47 @@ package com.bioh.postal.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bioh.postal.controllers.GameCameraController;
+import com.bioh.postal.levelbuilders.GenericLevelBuilder;
+import com.bioh.postal.levelbuilders.LevelBuilder1;
 import com.bioh.postal.objects.Player;
 
 public class GameScreen extends GenericScreen{
 	
-	private OrthographicCamera camera;
+	
 	private Box2DDebugRenderer renderer;
 	private World world;
 	private Player player;
+	private GenericLevelBuilder levelBuilder;
+	private GameCameraController gameCameraController;
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
 	
 	
-	public GameScreen(){
-
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+	public GameScreen(int level){
 		
-		camera = new OrthographicCamera(w,h);
-		
+		gameCameraController = new GameCameraController(this);
 		world = new World(new Vector2(0, -9.8f), false);
 		renderer = new Box2DDebugRenderer();
-		
-		BodyDef floorDef = new BodyDef();
-	    floorDef.position.set(0,0);
-	      
-	    Body floorBody = world.createBody(floorDef);
-	      
-	    PolygonShape floorShape = new PolygonShape();
-	    floorShape.setAsBox(30, 2);
-	      
-	    floorBody.createFixture(floorShape, 0.0f);
+
+		switch (level){
+		case 1:
+			levelBuilder = new LevelBuilder1(this);
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
 		
 		player = new Player(this);
-		
-		camera.zoom = 0.2f;
-		camera.translate(0, 30);
-		
 	}
 	
 	public World getWorld(){
@@ -68,6 +63,7 @@ public class GameScreen extends GenericScreen{
 		player.setRight(rightPressed);
 		
 		player.update();
+		gameCameraController.update();
 		
 		world.step(1/30f, 2, 6);
 		
@@ -79,17 +75,18 @@ public class GameScreen extends GenericScreen{
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.2f, 1.0f);   
 	    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	    
-	    camera.update();
-	    
-	    renderer.render(world, camera.combined);
-	    
-	    
+	    renderer.render(world, gameCameraController.getCamera().combined);
+
 	}
 
 	@Override
 	public boolean isDone() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public Player getPlayer(){
+		return player;
 	}
 
 }

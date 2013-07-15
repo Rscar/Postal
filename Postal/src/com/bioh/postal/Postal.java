@@ -23,7 +23,7 @@ public class Postal extends Game implements ApplicationListener {
 		
 		screenController = new ScreenController();
 		
-		setScreen (new GameScreen());
+		setScreen (new GameScreen(1));
 
 	}
 

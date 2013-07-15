@@ -27,7 +27,7 @@ public class ScreenController {
 			} 
 			
 			else if(currentScreen instanceof MainMenuScreen) {
-				postal.setScreen(new GameScreen());
+				postal.setScreen(new GameScreen(1));
 				
 			}
 		}

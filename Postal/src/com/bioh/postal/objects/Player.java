@@ -23,53 +23,46 @@ public class Player {
 	
 	private Body playerBody;
 	
-	private float thrustAmount = 150f;
-	
-	
-	
-	
-	
-	World world;
+	private float thrustAmount = 400f;
+
 	
 	public Player(GameScreen gameScreen){
 		
-		world = gameScreen.getWorld();
+
 		
 		BodyDef playerDef = new BodyDef();
 	    playerDef.type = BodyType.DynamicBody;
  
-	    playerBody = world.createBody(playerDef);
+	    playerBody = gameScreen.getWorld().createBody(playerDef);
 	      
 	    PolygonShape shipShape = new PolygonShape();
-	    shipShape.setAsBox(6, 1, new Vector2(0, 80), 0);
-	      
+	    shipShape.setAsBox(8, 1, new Vector2(0, 80), 0);
+	       
 	    FixtureDef playerFixture = new FixtureDef();
 	    playerFixture.shape = shipShape;
-	    playerFixture.density = 0.5f;
+	    playerFixture.density = 0.9f;
 	    playerFixture.friction = 0.8f;
 	    playerFixture.restitution = 0.4f;
 	     
-	      
+	    playerBody.setLinearDamping(0.2f);
+	    playerBody.setAngularDamping(0.999f);
 	    playerBody.createFixture(playerFixture);
 		
 	}
 	public void update(){
-		rightThrusterLoc.set(playerBody.getWorldCenter().x + MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 6,playerBody.getWorldCenter().y + MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 6);
-		leftThrusterLoc.set(playerBody.getWorldCenter().x - MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 6,playerBody.getWorldCenter().y - MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 6);
+		rightThrusterLoc.set(playerBody.getWorldCenter().x + MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 3,playerBody.getWorldCenter().y + MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 3);
+		leftThrusterLoc.set(playerBody.getWorldCenter().x - MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 3,playerBody.getWorldCenter().y - MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 3);
 
-		leftThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2) * thrustAmount);
-		rightThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2) * thrustAmount);
+		rightThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount);
+		leftThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount);
+
 		
-		if(rightThrusterOn){
-			 
-	    	 
-	    	  playerBody.applyForce(rightThrusterForce, rightThrusterLoc, true);
-	     }
-	      if(leftThrusterOn){
-	    	  
-	     	 
-	    	  playerBody.applyForce(leftThrusterForce, leftThrusterLoc, true);
-	      }
+		if(rightThrusterOn){	 
+			playerBody.applyForce(rightThrusterForce, rightThrusterLoc, true);
+	    }
+	    if(leftThrusterOn){	 
+	    	playerBody.applyForce(leftThrusterForce, leftThrusterLoc, true);
+	    }
 	}
 	
 	public void setLeft(boolean left){
@@ -78,5 +71,9 @@ public class Player {
 	
 	public void setRight(boolean right){
 		rightThrusterOn = right;
+	}
+	
+	public Vector2 getPosition(){
+		return playerBody.getWorldCenter();
 	}
 }
