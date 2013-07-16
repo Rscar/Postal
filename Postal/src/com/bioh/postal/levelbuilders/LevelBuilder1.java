@@ -1,8 +1,7 @@
 package com.bioh.postal.levelbuilders;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.math.Vector2;
+import com.bioh.postal.objects.StaticBox;
 import com.bioh.postal.screens.GameScreen;
 
 public class LevelBuilder1 extends GenericLevelBuilder{
@@ -20,16 +19,17 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 	@Override
 	public void build() {
 		
-		BodyDef floorDef = new BodyDef();
-	    floorDef.position.set(0,0);  
-	    
-	    Body floorBody = gameScreen.getWorld().createBody(floorDef);   
-	    
-	    PolygonShape floorShape = new PolygonShape();
-	    floorShape.setAsBox(100, 2);  
-	    
-	    floorBody.createFixture(floorShape, 0.0f);
-		
+		new StaticBox(1000, 4, new Vector2(0,-2), gameScreen);
+		new StaticBox(60, 150, new Vector2(-150,75), gameScreen);
+		new StaticBox(10, 20, new Vector2(-160,160), gameScreen);
+		new StaticBox(150, 80, new Vector2(-300,40), gameScreen);
+		new StaticBox(110, 20, new Vector2(-300,90), gameScreen);
+		new StaticBox(70, 20, new Vector2(-300,110), gameScreen);
+		new StaticBox(20, 20, new Vector2(-280,130), gameScreen);
+		new StaticBox(100, 40, new Vector2(70,20), gameScreen);
+		new StaticBox(60, 70, new Vector2(150,35), gameScreen);
+		new StaticBox(80, 250, new Vector2(300,125), gameScreen);
+
 	}
 
 	@Override

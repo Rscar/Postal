@@ -17,7 +17,7 @@ public class GameCameraController {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
-		camera = new OrthographicCamera(w,h);
+		camera = new OrthographicCamera(960, h/w * 960);
 		
 		camera.zoom = 0.2f;
 		camera.translate(0, 50);
@@ -28,7 +28,8 @@ public class GameCameraController {
 	
 	public void update(){
 		camera.position.x = screen.getPlayer().getPosition().x;
-		camera.zoom = 0.2f + (screen.getPlayer().getPosition().y)/750;
+		camera.position.y = 50 + screen.getPlayer().getPosition().y/3;
+		camera.zoom = 0.2f + screen.getPlayer().getPosition().y/700;
 		camera.update();
 	}
 	
