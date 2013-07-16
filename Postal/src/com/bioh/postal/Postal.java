@@ -3,11 +3,12 @@ package com.bioh.postal;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.bioh.postal.controllers.ScreenController;
 import com.bioh.postal.screens.GameScreen;
 import com.bioh.postal.screens.GenericScreen;
 
-public class Postal extends Game implements ApplicationListener {
+public class Postal extends Game implements ApplicationListener{
 	
 
 	public GenericScreen currentScreen;

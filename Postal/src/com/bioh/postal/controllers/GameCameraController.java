@@ -27,10 +27,12 @@ public class GameCameraController {
 	}
 	
 	public void update(){
+		
 		camera.position.x = screen.getPlayer().getPosition().x;
 		camera.position.y = 50 + screen.getPlayer().getPosition().y/3;
 		camera.zoom = 0.2f + screen.getPlayer().getPosition().y/700;
 		camera.update();
+		
 	}
 	
 	public Camera getCamera(){

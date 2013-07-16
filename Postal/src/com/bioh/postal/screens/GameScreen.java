@@ -2,6 +2,7 @@ package com.bioh.postal.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,7 +15,7 @@ import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
 import com.bioh.postal.objects.Player;
 
-public class GameScreen extends GenericScreen{
+public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	
 	private Box2DDebugRenderer renderer;
@@ -29,9 +30,18 @@ public class GameScreen extends GenericScreen{
 	
 	public GameScreen(int level){
 		
-		gameCameraController = new GameCameraController(this);
-		world = new World(new Vector2(0, -9.8f), false);
+		Gdx.input.setInputProcessor(this);
+		
+		buildWorld(level);
+		
+	}
+	
+	public void buildWorld(int level){
 		renderer = new Box2DDebugRenderer();
+		gameCameraController = new GameCameraController(this);
+
+		world = new World(new Vector2(0, -9.8f), false);
+		
 
 		switch (level){
 		case 1:
@@ -53,13 +63,30 @@ public class GameScreen extends GenericScreen{
 	@Override
 	public void update(float delta) {
 		 
+		rightPressed = false;
+		leftPressed = false;
+		
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) leftPressed = true;
-	    else leftPressed = false;
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) rightPressed = true;
+		
+
+		for (int i = 0; i < 4; i++) {
+			
+			if (Gdx.input.isTouched(i) == false) continue;
+
+			float x = Gdx.input.getX(i);
+			float y = Gdx.input.getY(i);
+			
+			if (x < Gdx.graphics.getWidth()/2){
+				leftPressed = true;
+			}
+			if (x > Gdx.graphics.getWidth()/2){
+				rightPressed = true;
+			}
+
+		}
 		
 		player.setLeft(leftPressed);
-	    
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) rightPressed = true;
-	    else rightPressed = false;
 		player.setRight(rightPressed);
 		
 		player.update();
@@ -87,6 +114,56 @@ public class GameScreen extends GenericScreen{
 	
 	public Player getPlayer(){
 		return player;
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if (keycode == Keys.R) {
+			buildWorld(1);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
