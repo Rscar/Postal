@@ -9,21 +9,20 @@ import com.bioh.postal.screens.GameScreen;
 import com.bioh.postal.screens.GenericScreen;
 
 public class Postal extends Game implements ApplicationListener{
-	
 
 	public GenericScreen currentScreen;
 	public ScreenController screenController;
 	public static Postal postal;
-	
-	
-	
+
 	@Override
 	public void create() {	
 		
 		postal = Postal.getInstance();
 		
+		//controller of the screens, this will check to see if screens need to be progressed or update the current screen
 		screenController = new ScreenController();
 		
+		//initially set the screen to a gamescreen level 1, will later change
 		setScreen (new GameScreen(1));
 
 	}
@@ -32,11 +31,15 @@ public class Postal extends Game implements ApplicationListener{
 	public void dispose() {
 	}
 
+	//this is the main driving game loop
 	@Override
 	public void render() {	
 		
+		//checks if current screen is finished, if it is, it will be progressed by the screen controller
 		currentScreen = (GenericScreen) getScreen();
 		screenController.checkScreen(currentScreen);
+		
+		//update the current screen
 		currentScreen.render(Gdx.graphics.getDeltaTime());
 		
 	}
