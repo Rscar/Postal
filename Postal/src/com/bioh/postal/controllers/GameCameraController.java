@@ -17,11 +17,14 @@ public class GameCameraController {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		
+		
 		camera = new OrthographicCamera(960, h/w * 960);
 		
-		camera.zoom = 0.15f;
+		camera.zoom = .15f;
 		camera.translate(0, 40);
 		camera.update();
+		
+
 
 	}
 	
@@ -32,7 +35,7 @@ public class GameCameraController {
 		//zoom based on players height off the ground
 		camera.position.x = screen.getPlayer().getPosition().x;
 		camera.position.y = 40 + screen.getPlayer().getPosition().y/3;
-		camera.zoom = 0.15f + screen.getPlayer().getPosition().y/600;
+		camera.zoom = .15f + screen.getPlayer().getPosition().y/600;
 		
 		//need to call update after changing camera zoom and position
 		camera.update();

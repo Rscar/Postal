@@ -6,14 +6,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.GameCameraController;
 import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
@@ -23,12 +27,15 @@ import com.bioh.postal.objects.Player;
 public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public ShapeRenderer shapeRenderer;
+	public OrthogonalTiledMapRenderer tiledMapRenderer;
+	public TiledMap map;
 	
 	
 	private Box2DDebugRenderer renderer;
 	private World world;
 	private GenericLevelBuilder levelBuilder;
 	private GameCameraController gameCameraController;
+	private Postal postal;
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
@@ -45,6 +52,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public void buildWorld(int level){
 		
+		postal = Postal.getInstance();
+		
 		//temporary shape renderer, will later use textures, obviously
 		shapeRenderer = new ShapeRenderer();
 		
@@ -52,7 +61,14 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		//the physics objects are on the screen
 		renderer = new Box2DDebugRenderer();
 		
+		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
+		TiledMap map = postal.assetManager.get("maps/test.tmx", TiledMap.class);
+		
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/4f);
+		
 		gameCameraController = new GameCameraController(this);
+		
+		
 
 		world = new World(new Vector2(0, -9.8f), false);
 		
@@ -134,6 +150,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	    
 	    //render the physics world with box2d debugger renderer
 		renderer.render(world, gameCameraController.getCamera().combined);
+	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
+	    tiledMapRenderer.render();
 
 	}
 	
