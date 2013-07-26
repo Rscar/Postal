@@ -54,22 +54,6 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		
 		postal = Postal.getInstance();
 		
-		//temporary shape renderer, will later use textures, obviously
-		shapeRenderer = new ShapeRenderer();
-		
-		//physics renderer, this can be taken out at a later date once we have textures and actual graphics to see where
-		//the physics objects are on the screen
-		renderer = new Box2DDebugRenderer();
-		
-		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
-		TiledMap map = postal.assetManager.get("maps/test.tmx", TiledMap.class);
-		
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/4f);
-		
-		gameCameraController = new GameCameraController(this);
-		
-		
-
 		world = new World(new Vector2(0, -9.8f), false);
 		
 		//will control what level we build
@@ -83,6 +67,19 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		case 3:
 			break;
 		}
+		
+		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
+		TiledMap map = postal.assetManager.get("maps/test.tmx", TiledMap.class);
+		
+		//temporary shape renderer, will later use textures, obviously
+		shapeRenderer = new ShapeRenderer();
+		
+		//physics renderer, this can be taken out at a later date once we have textures and actual graphics to see where
+		//the physics objects are on the screen
+		renderer = new Box2DDebugRenderer();
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/4f);
+		
+		gameCameraController = new GameCameraController(this);
 
 	}
 	

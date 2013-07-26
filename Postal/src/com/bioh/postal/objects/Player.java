@@ -35,7 +35,7 @@ public class Player extends GenericObject{
 	    playerBody = gameScreen.getWorld().createBody(playerDef);
 	      
 	    PolygonShape shipShape = new PolygonShape();
-	    shipShape.setAsBox(9, 1, new Vector2(0, 80), 0);
+	    shipShape.setAsBox(9, 1, new Vector2(300, 80), 0);
 
 	    //fixtures are the parts that are attached to the ship body, for now we have 3, one bottom and 2 walls
 	    FixtureDef playerFixture = new FixtureDef();
@@ -45,7 +45,7 @@ public class Player extends GenericObject{
 	    playerFixture.restitution = 0.4f;
 	    
 	    PolygonShape shipShape2 = new PolygonShape();
-	    shipShape2.setAsBox(1, 2, new Vector2(-10, 81), 0);
+	    shipShape2.setAsBox(1, 2, new Vector2(290, 81), 0);
 	    
 	    FixtureDef playerFixture2 = new FixtureDef();
 	    playerFixture2.shape = shipShape2;
@@ -54,7 +54,7 @@ public class Player extends GenericObject{
 	    playerFixture2.restitution = 0.4f;
 	    
 	    PolygonShape shipShape3 = new PolygonShape();
-	    shipShape3.setAsBox(1, 2, new Vector2(10, 81), 0);
+	    shipShape3.setAsBox(1, 2, new Vector2(310, 81), 0);
 	    
 	    FixtureDef playerFixture3 = new FixtureDef();
 	    playerFixture3.shape = shipShape3;

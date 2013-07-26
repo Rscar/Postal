@@ -27,16 +27,6 @@ public class Postal extends Game implements ApplicationListener{
 		// Asset manager for loading and controlling assets
 		assetManager = new AssetManager();
 		
-		// Load assets
-		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		assetManager.load("maps/test.tmx", TiledMap.class);
-		
-		
-		// Block while loading assets.
-		while(!assetManager.update()) {
-			
-		};
-		
 		//controller of the screens, this will check to see if screens need to be progressed or update the current screen
 		screenController = new ScreenController();
 		

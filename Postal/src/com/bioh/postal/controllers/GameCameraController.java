@@ -3,12 +3,16 @@ package com.bioh.postal.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.bioh.postal.screens.GameScreen;
 
 public class GameCameraController {
 	
 	private OrthographicCamera camera;
 	private GameScreen screen;
+	
+	// Going to be used as boundary check for camera.
+	private BoundingBox bounds;
 	
 	public GameCameraController(GameScreen screen){
 		
@@ -18,10 +22,12 @@ public class GameCameraController {
 		float h = Gdx.graphics.getHeight();
 		
 		
+		
+		
 		camera = new OrthographicCamera(960, h/w * 960);
 		
 		camera.zoom = .15f;
-		camera.translate(0, 40);
+		camera.translate(0, 340);
 		camera.update();
 		
 

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
- <properties>
-  <property name="blended tiles" value="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20"/>
- </properties>
- <tileset firstgid="1" name="test" tilewidth="32" tileheight="32">
-  <image source="tiles.png" width="128" height="128"/>
+ <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32">
+  <image source="tiles.png" width="320" height="64"/>
  </tileset>
  <layer name="Tile Layer 1" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2LEKgCAUQFEzcOj/P7gll1CpJV9yhjP1hqeXCCoppY0wSoAdGPcoA0eAnVfW69Gb1SNWjxxg55W9+X7UWU1i99BnTpNWj6xHiB73DrrM69Gix7c9tPhPj2q/zD7P343uugye7w2zz7KK3v+R3ry7j8F7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8MwJtAooCg==
+   eJzt28FqwkAUQNGQbf7/f0sXLlpMOkGTudhzYFAhSvIutiLjsgAAAABA1zr7BAAAgI+2zT4BftCjRY8WPVq2RZMSPVq2X7fMpUeLHi06tOjRokeLHi16tOjRokeLHi16tOjRokeLHi16tOjRokeLHi16tOjRoscce/t69JhDj46jPSR63G/buf/sMdcamb8m9xmZvx732JuzHnMczfnofwrX0KPlrznbS30vPVr0aBmZs9+r3UePFj1aRuesxz306DgzYz2up0fL2R6aXOvsfPW4lh4terTo0aJHix4terTo0aJHix4terTo0aJHi+/bW/Ro0aNFjxZ7GXpG91+NHstr9Gg5sz9Rj+vp0WL/bovPWC16tOjRokeLHi3/pcc2uGb75B4jc650eBg9n8cx64Xn8g7PGqxP1uOYdRl/78xYR9e5d22z17uv/ZXn3/m38Ps1vwAlQQt8
   </data>
  </layer>
 </map>
