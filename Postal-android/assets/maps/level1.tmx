@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="36" height="30" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset1" tilewidth="32" tileheight="32">
+  <image source="tileset1.png" width="256" height="128"/>
+ </tileset>
+ <tileset firstgid="33" name="tileset2" tilewidth="32" tileheight="32">
+  <image source="tileset2.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="36" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztkUsKwDAIRHOT3iD1/qdrF12E4sRJ7S8wD1wIfh5aihBCCCGEmAn7WuDEzD5PuBuIEZ87vdr9C/Dx8ow/6xPtRz7s3is+bY7ugFzQ79k7enXMzN7sXk3klPFhXN7yYeaN+qC+zP8jIp+6xwp86hHm1GR8/sYGrCEaWA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="36" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlNsKgzAMQAN7cg7EXRhCi///l2sfAiGkMfGCA1M4SGOSnrbiAABDEASH8A2C4DLMFycXkiO/K/Rk7qnVeBM+Ru/6HAsv4X1y9GqRyDqWvXbMJws5eaOTtOad3QnGKP2K3pL/0hnU/T/ZnWCMIt2ZFzDkeH1w1DN8kLnHR8tf64M56KSdgzQsPgB+H1rH15d8bqB/k3v6tM6BuvCefHh8tLqlwV2sPjS2l4/kcpZPy+UMH80Fa/l/F7/zI3ykPrxnK459pz/jB2MAU7g=
+  </data>
+ </layer>
+ <objectgroup name="static" width="36" height="30">
+  <object x="0" y="928">
+   <polygon points="0,0 1152,0 1152,32 0,32"/>
+  </object>
+  <object x="32" y="576">
+   <polygon points="0,0 192,0 192,352 0,352"/>
+  </object>
+  <object x="96" y="544">
+   <polygon points="0,0 96,0 96,32 0,32"/>
+  </object>
+  <object x="128" y="480">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object x="320" y="640">
+   <polygon points="0,0 0,288 32,288 32,0"/>
+  </object>
+  <object x="608" y="928">
+   <polygon points="0,0 0,-32 192,-224 288,-224 288,0"/>
+  </object>
+  <object x="896" y="864">
+   <polygon points="0,0 224,0 224,64 0,64"/>
+  </object>
+  <object x="1024" y="544">
+   <polygon points="0,0 96,0 96,320 0,320"/>
+  </object>
+  <object x="352" y="640">
+   <polygon points="0,0 64,64 64,288 0,288"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="player" width="36" height="30">
+  <object x="480" y="864" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="blocks" width="36" height="30">
+  <object x="279" y="824" width="17" height="16"/>
+  <object x="985" y="761" width="13" height="13"/>
+  <object x="1047" y="474" width="13" height="13"/>
+  <object x="45" y="525" width="10" height="9"/>
+ </objectgroup>
+</map>

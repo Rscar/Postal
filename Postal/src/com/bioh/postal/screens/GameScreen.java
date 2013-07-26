@@ -28,8 +28,6 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public ShapeRenderer shapeRenderer;
 	public OrthogonalTiledMapRenderer tiledMapRenderer;
-	public TiledMap map;
-	
 	
 	private Box2DDebugRenderer renderer;
 	private World world;
@@ -39,6 +37,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
+	
+	private float map_scalar;
 	
 	private ArrayList<GenericObject> objects = new ArrayList<GenericObject>();
 
@@ -68,16 +68,14 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 			break;
 		}
 		
-		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
-		TiledMap map = postal.assetManager.get("maps/test.tmx", TiledMap.class);
-		
 		//temporary shape renderer, will later use textures, obviously
 		shapeRenderer = new ShapeRenderer();
 		
 		//physics renderer, this can be taken out at a later date once we have textures and actual graphics to see where
 		//the physics objects are on the screen
 		renderer = new Box2DDebugRenderer();
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/4f);
+		
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(levelBuilder.getMap(), 0.5f);
 		
 		gameCameraController = new GameCameraController(this);
 
@@ -134,6 +132,9 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		Gdx.gl.glClearColor(0.0f, 0.0f, 0.2f, 1.0f);   
 	    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	    
+	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
+	    tiledMapRenderer.render();
+	    
 	    //start the shaperenderer, and set it to draw type filled, essentially drawing solid shapes as commanded
 	    shapeRenderer.setProjectionMatrix(gameCameraController.getCamera().combined);
 		shapeRenderer.begin(ShapeType.Filled);
@@ -144,11 +145,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		}
 		
 	    shapeRenderer.end();
-	    
-	    //render the physics world with box2d debugger renderer
 		renderer.render(world, gameCameraController.getCamera().combined);
-	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
-	    tiledMapRenderer.render();
 
 	}
 	

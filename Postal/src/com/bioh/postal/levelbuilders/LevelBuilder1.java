@@ -1,8 +1,13 @@
 package com.bioh.postal.levelbuilders;
 
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.bioh.postal.objects.MountedCube;
 import com.bioh.postal.objects.Player;
@@ -15,6 +20,13 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 	private Player player;
 	private GameScreen gameScreen;
 	private Postal postal;
+	TiledMap map;
+	MapLayer tempLayer;
+	
+	MapObject tempObject;
+	Polygon tempPolygon;
+	int xTemp;
+	int yTemp;
 	
 	public LevelBuilder1(GameScreen gameScreen){
 		
@@ -28,29 +40,59 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 	@Override
 	public void build() {	
 		
-		//build some boxes, static
-		//they don't need to be added to the gamescreen object arraylist because 
-		//they wont be updated, they are created and sit there
-		new StaticBox(1000, 4, new Vector2(300,-2), gameScreen);
-		new StaticBox(60, 150, new Vector2(150,75), gameScreen);
-		new StaticBox(10, 20, new Vector2(140,160), gameScreen);
-		new StaticBox(150, 80, new Vector2(0,40), gameScreen);
-		new StaticBox(110, 20, new Vector2(0,90), gameScreen);
-		new StaticBox(70, 20, new Vector2(0,110), gameScreen);
-		new StaticBox(20, 20, new Vector2(20,130), gameScreen);
-		new StaticBox(100, 40, new Vector2(370,20), gameScreen);
-		new StaticBox(60, 70, new Vector2(450,35), gameScreen);
-		new StaticBox(80, 250, new Vector2(600,125), gameScreen);
 		
-		//add some dynamic objects, update and draw functions will be called by the gamescreen
-		//through referencing the objects arraylist
-		gameScreen.addObject(new MountedCube(new Vector2(270,30), gameScreen));
-		gameScreen.addObject(new MountedCube(new Vector2(500,30), gameScreen));
-		gameScreen.addObject(new MountedCube(new Vector2(100, 30), gameScreen));
+		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
+		map = postal.assetManager.get("maps/level1.tmx", TiledMap.class);
 		
-		//create a player, we name the object because it is heavily referenced by classes that "know" the gamescreen
-		player = new Player(gameScreen);
-		gameScreen.addObject(player);
+		
+		//for the static object layer
+		//loop through objects, adding the polygons defined in the tmx file
+		//we need to scale, considering map renders at .5 size
+		tempLayer = map.getLayers().get("static");
+
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
+			tempObject = tempLayer.getObjects().get(i);
+
+			tempPolygon = ((PolygonMapObject) tempObject).getPolygon();
+			
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			new StaticBox(new Vector2(xTemp, yTemp), tempPolygon, gameScreen);
+		}
+		
+		
+		//open up player layer
+		//there is only one player, but just for sake of convention it is in a for loop
+		//add the player
+		tempLayer = map.getLayers().get("player");
+
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
+			tempObject = tempLayer.getObjects().get(i);
+	
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			//create a player, we name the object because it is heavily referenced by classes that "know" the gamescreen
+			player = new Player(new Vector2(xTemp, yTemp), gameScreen);
+			gameScreen.addObject(player);
+
+		}
+		
+		
+		//open the blocks layer
+		//loop through the objects, add blocks
+		tempLayer = map.getLayers().get("blocks");
+
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
+			tempObject = tempLayer.getObjects().get(i);
+	
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			gameScreen.addObject(new MountedCube(new Vector2(xTemp, yTemp), gameScreen));
+		}
+
 
 	}
 
@@ -58,7 +100,7 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 	public void loadAssets() {
 		// Load assets
 		postal.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		postal.assetManager.load("maps/test.tmx", TiledMap.class);
+		postal.assetManager.load("maps/level1.tmx", TiledMap.class);
 		
 		
 		// Block while loading assets.
@@ -71,6 +113,11 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 	public Player getPlayer() {
 		// TODO Auto-generated method stub
 		return player;
+	}
+
+	@Override
+	public TiledMap getMap() {
+		return map;
 	}
 
 }
