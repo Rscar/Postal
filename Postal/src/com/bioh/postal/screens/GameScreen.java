@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -37,8 +38,6 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	private boolean leftPressed;
 	private boolean rightPressed;
-	
-	private float map_scalar;
 	
 	private ArrayList<GenericObject> objects = new ArrayList<GenericObject>();
 
@@ -151,6 +150,10 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public Player getPlayer(){
 		return levelBuilder.getPlayer();
+	}
+	
+	public Map getMap(){
+		return levelBuilder.getMap();
 	}
 	
 	public void addObject(GenericObject object){

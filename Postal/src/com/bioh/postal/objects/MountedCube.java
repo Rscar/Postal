@@ -15,6 +15,7 @@ public class MountedCube extends GenericObject{
 	private GameScreen gameScreen;
 	
 	private Body blockBody;
+	private boolean mounted = true;
 	
 	//this is our ice cube, to be picked up by the player
 	public MountedCube(Vector2 position, GameScreen gameScreen){
@@ -23,7 +24,7 @@ public class MountedCube extends GenericObject{
 		
 		//starts off as a static object
 		BodyDef blockDef = new BodyDef();
-	    blockDef.type = BodyType.StaticBody;
+	    blockDef.type = BodyType.StaticBody;;
  
 	    blockBody = gameScreen.getWorld().createBody(blockDef);
 	      
@@ -32,11 +33,11 @@ public class MountedCube extends GenericObject{
 	       
 	    FixtureDef blockFixture = new FixtureDef();
 	    blockFixture.shape = blockShape;
-	    blockFixture.density = 0.1f;
+	    blockFixture.density = 0.8f;
 	    blockFixture.friction = 0.1f;
 	    blockFixture.restitution = 0.01f;
 	     
-	    blockBody.setLinearDamping(0.3f);
+	    blockBody.setLinearDamping(0.2f);
 
 	    blockBody.createFixture(blockFixture);
 	    
@@ -52,6 +53,8 @@ public class MountedCube extends GenericObject{
 		if (triggerLocation.dst2(gameScreen.getPlayer().getPosition()) < 6 * 6){
 			blockBody.setType(BodyType.DynamicBody);
 		}
+		
+		//blockBody.applyForceToCenter(new Vector2(0,100), false);
 		
 	}
 

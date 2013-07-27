@@ -32,7 +32,7 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 			
 		};
 
-		System.out.println("Trying to get map, amount loaded: " + postal.assetManager.getLoadedAssets());
+		System.out.println("Trying to get map, number of files loaded: " + postal.assetManager.getLoadedAssets());
 		map = postal.assetManager.get("maps/level1.tmx", TiledMap.class);
 	}
 

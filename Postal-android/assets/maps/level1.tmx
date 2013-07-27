@@ -44,6 +44,21 @@
   <object x="352" y="640">
    <polygon points="0,0 64,64 64,288 0,288"/>
   </object>
+  <object x="544" y="928">
+   <polygon points="0,0 9,-13 20,-13 32,0"/>
+  </object>
+  <object x="480" y="928">
+   <polygon points="0,0 10,-11 19,-11 32,0"/>
+  </object>
+  <object x="448" y="928">
+   <polygon points="0,0 10,-12 21,-12 32,0"/>
+  </object>
+  <object x="224" y="928">
+   <polygon points="0,0 9,-12 21,-12 32,0"/>
+  </object>
+  <object x="256" y="928">
+   <polygon points="0,0 9,-12 21,-12 32,0"/>
+  </object>
  </objectgroup>
  <objectgroup name="player" width="36" height="30">
   <object x="480" y="864" width="32" height="32"/>

@@ -105,4 +105,8 @@ public class Player extends GenericObject{
 		return playerBody.getWorldCenter();
 	}
 	
+	public Vector2 getVelocity(){
+		return playerBody.getLinearVelocity();
+	}
+	
 }
