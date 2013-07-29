@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.bioh.postal.screens.GameScreen;
 
@@ -24,7 +25,7 @@ public class MountedCube extends GenericObject{
 		
 		//starts off as a static object
 		BodyDef blockDef = new BodyDef();
-	    blockDef.type = BodyType.StaticBody;;
+	    blockDef.type = BodyType.DynamicBody;;
  
 	    blockBody = gameScreen.getWorld().createBody(blockDef);
 	      
@@ -33,29 +34,33 @@ public class MountedCube extends GenericObject{
 	       
 	    FixtureDef blockFixture = new FixtureDef();
 	    blockFixture.shape = blockShape;
-	    blockFixture.density = 0.8f;
+	    blockFixture.density = 0.2f;
 	    blockFixture.friction = 0.1f;
 	    blockFixture.restitution = 0.01f;
-	     
+	    
 	    blockBody.setLinearDamping(0.2f);
-
 	    blockBody.createFixture(blockFixture);
 	    
+	    
 	    //set trigger location. if player gets too close to trigger, we will "drop" the cube
-	    triggerLocation = new Vector2(position.x, position.y - 10);
+	    triggerLocation = new Vector2(position.x, position.y);
 		
 	}
 
 	@Override
 	public void update() {
 
-		//if distance b/w trigger and player < 6, make the cube dynamic, dropping it from its static position
-		if (triggerLocation.dst2(gameScreen.getPlayer().getPosition()) < 6 * 6){
-			blockBody.setType(BodyType.DynamicBody);
+		//if the block moves at all, "drop" it
+		if (blockBody.getLinearVelocity().x > 0 || blockBody.getLinearVelocity().y > 0){
+			mounted = false;
 		}
+
+		if (mounted){
+			blockBody.applyForceToCenter(new Vector2(0,(float) (9.8 * blockBody.getMass())), false);
+		}
+			
 		
-		//blockBody.applyForceToCenter(new Vector2(0,100), false);
-		
+
 	}
 
 	@Override

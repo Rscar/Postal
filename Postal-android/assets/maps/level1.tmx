@@ -44,20 +44,20 @@
   <object x="352" y="640">
    <polygon points="0,0 64,64 64,288 0,288"/>
   </object>
-  <object x="544" y="928">
-   <polygon points="0,0 9,-13 20,-13 32,0"/>
+  <object x="545" y="926">
+   <polygon points="0,0 0,-4 9,-9 17,-9 24,-4 28,-4 28,0"/>
   </object>
-  <object x="480" y="928">
-   <polygon points="0,0 10,-11 19,-11 32,0"/>
+  <object x="481" y="926">
+   <polygon points="0,0 0,-4 9,-9 17,-9 24,-4 28,-4 28,0"/>
   </object>
-  <object x="448" y="928">
-   <polygon points="0,0 10,-12 21,-12 32,0"/>
+  <object x="449" y="926">
+   <polygon points="0,0 0,-4 9,-9 17,-9 24,-4 28,-4 28,0"/>
   </object>
-  <object x="224" y="928">
-   <polygon points="0,0 9,-12 21,-12 32,0"/>
+  <object x="226" y="926">
+   <polygon points="0,0 0,-4 9,-9 17,-9 24,-4 28,-4 28,0"/>
   </object>
-  <object x="256" y="928">
-   <polygon points="0,0 9,-12 21,-12 32,0"/>
+  <object x="257" y="926">
+   <polygon points="0,0 0,-4 9,-9 17,-9 24,-4 28,-4 28,0"/>
   </object>
  </objectgroup>
  <objectgroup name="player" width="36" height="30">
