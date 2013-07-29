@@ -1,5 +1,7 @@
 package com.bioh.postal.objects;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -91,6 +93,17 @@ public class Player extends GenericObject{
 	public void draw(ShapeRenderer shapeRenderer) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public Sprite getSprite() {
+		// TODO
+		return new Sprite();
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO draw ur sprites
 	}
 	
 	public void setLeft(boolean left){

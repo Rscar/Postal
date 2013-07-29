@@ -1,6 +1,8 @@
 package com.bioh.postal.levelbuilders;
 
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.bioh.postal.screens.GameScreen;
@@ -26,6 +28,8 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 		// Load assets
 		postal.assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 		postal.assetManager.load("maps/level1.tmx", TiledMap.class);
+		postal.assetManager.setLoader(Texture.class, new TextureLoader(new InternalFileHandleResolver()));
+		postal.assetManager.load("sprites/cube.png", Texture.class);
 
 		// Block while loading assets.
 		while(!postal.assetManager.update()) {

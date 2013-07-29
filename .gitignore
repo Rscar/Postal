@@ -216,3 +216,6 @@ pip-log.txt
 
 # Packmaps shell script
 packmaps.sh
+
+# Stupid GWT bullshit
+.class
