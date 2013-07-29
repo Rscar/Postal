@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.Map;
@@ -36,6 +37,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private GameCameraController gameCameraController;
 	private Postal postal;
 	
+	private SpriteBatch batch;
+	
 	private boolean leftPressed;
 	private boolean rightPressed;
 	
@@ -44,6 +47,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	public GameScreen(int level){
 		
 		Gdx.input.setInputProcessor(this);
+		batch = new SpriteBatch();
 		
 		buildWorld(level);
 		
@@ -145,6 +149,14 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		
 	    shapeRenderer.end();
 		renderer.render(world, gameCameraController.getCamera().combined);
+		
+		// Call sprite batch version of draw now
+		batch.setProjectionMatrix(gameCameraController.getCamera().combined);
+		batch.begin();
+		for (int i = 0; i < objects.size(); i++){
+			objects.get(i).draw(batch);
+		}
+		batch.end();	
 
 	}
 	
