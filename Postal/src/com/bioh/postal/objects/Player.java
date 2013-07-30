@@ -1,5 +1,6 @@
 package com.bioh.postal.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
+import com.bioh.postal.Postal;
 import com.bioh.postal.screens.GameScreen;
 
 public class Player extends GenericObject{
@@ -24,20 +26,25 @@ public class Player extends GenericObject{
 	private Vector2 rightThrusterForce = new Vector2();
 	private Vector2 leftThrusterForce = new Vector2();
 	
+	private Sprite sprite;
+	private Postal postal;
+	
 	private Body playerBody;
 	
 	private float thrustAmount = 400f;
 
 	
 	public Player(Vector2 initpos, GameScreen gameScreen){
+		postal = Postal.getInstance();
 		
 		BodyDef playerDef = new BodyDef();
 	    playerDef.type = BodyType.DynamicBody;
+	    playerDef.position.set(new Vector2(initpos.x, initpos.y));
  
 	    playerBody = gameScreen.getWorld().createBody(playerDef);
 	      
 	    PolygonShape shipShape = new PolygonShape();
-	    shipShape.setAsBox(9, 1, new Vector2(initpos.x, initpos.y), 0);
+	    shipShape.setAsBox(9, 1);
 
 	    //fixtures are the parts that are attached to the ship body, for now we have 3, one bottom and 2 walls
 	    FixtureDef playerFixture = new FixtureDef();
@@ -47,7 +54,7 @@ public class Player extends GenericObject{
 	    playerFixture.restitution = 0.4f;
 	    
 	    PolygonShape shipShape2 = new PolygonShape();
-	    shipShape2.setAsBox(1, 2, new Vector2(initpos.x-10, initpos.y+1), 0);
+	    shipShape2.setAsBox(1, 2, new Vector2(-10, 1), 0);
 	    
 	    FixtureDef playerFixture2 = new FixtureDef();
 	    playerFixture2.shape = shipShape2;
@@ -56,7 +63,7 @@ public class Player extends GenericObject{
 	    playerFixture2.restitution = 0.4f;
 	    
 	    PolygonShape shipShape3 = new PolygonShape();
-	    shipShape3.setAsBox(1, 2, new Vector2(initpos.x+10, initpos.y+1), 0);
+	    shipShape3.setAsBox(1, 2, new Vector2(10, 1), 0);
 	    
 	    FixtureDef playerFixture3 = new FixtureDef();
 	    playerFixture3.shape = shipShape3;
@@ -69,6 +76,10 @@ public class Player extends GenericObject{
 	    playerBody.createFixture(playerFixture);
 	    playerBody.createFixture(playerFixture2);
 	    playerBody.createFixture(playerFixture3);
+	    
+	    sprite = new Sprite(postal.assetManager.get("sprites/platform.png", Texture.class));
+		sprite.setSize(22,4);
+		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/4);
 		
 	}
 	
@@ -98,7 +109,10 @@ public class Player extends GenericObject{
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		// TODO draw ur sprites
+		sprite.setRotation(playerBody.getAngle() * MathUtils.radiansToDegrees);
+		sprite.setPosition(playerBody.getPosition().x - sprite.getWidth()/2, playerBody.getPosition().y - sprite.getHeight()/4);
+		System.out.println("Body height at " + playerBody.getPosition().y + " sprite Height at " + (playerBody.getPosition().y - sprite.getHeight()/4));
+		sprite.draw(batch);
 	}
 	
 	public void setLeft(boolean left){

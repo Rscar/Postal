@@ -30,6 +30,7 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 		postal.assetManager.load("maps/level1.tmx", TiledMap.class);
 		postal.assetManager.setLoader(Texture.class, new TextureLoader(new InternalFileHandleResolver()));
 		postal.assetManager.load("sprites/cube.png", Texture.class);
+		postal.assetManager.load("sprites/platform.png", Texture.class);
 
 		// Block while loading assets.
 		while(!postal.assetManager.update()) {

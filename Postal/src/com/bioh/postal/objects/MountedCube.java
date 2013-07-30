@@ -76,9 +76,8 @@ public class MountedCube extends GenericObject{
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-//		System.out.println("Rotation: " + MathUtils.radiansToDegrees * blockBody.getAngle() + " Position: " + blockBody.getPosition());
 		sprite.setRotation(blockBody.getAngle() * MathUtils.radiansToDegrees);
-		sprite.setPosition(blockBody.getPosition().x - sprite.getWidth()/2, blockBody.getPosition().y - sprite.getWidth()/2);
+		sprite.setPosition(blockBody.getPosition().x - sprite.getWidth()/2, blockBody.getPosition().y - sprite.getHeight()/2);
 		sprite.draw(batch);
 	}
 	
