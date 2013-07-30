@@ -28,7 +28,6 @@ import com.bioh.postal.objects.Player;
 
 public class GameScreen extends GenericScreen implements InputProcessor{
 	
-	public ShapeRenderer shapeRenderer;
 	public OrthogonalTiledMapRenderer tiledMapRenderer;
 	
 	private Box2DDebugRenderer renderer;
@@ -70,9 +69,6 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		case 3:
 			break;
 		}
-		
-		//temporary shape renderer, will later use textures, obviously
-		shapeRenderer = new ShapeRenderer();
 		
 		//physics renderer, this can be taken out at a later date once we have textures and actual graphics to see where
 		//the physics objects are on the screen
@@ -137,17 +133,6 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	    
 	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
 	    tiledMapRenderer.render();
-	    
-	    //start the shaperenderer, and set it to draw type filled, essentially drawing solid shapes as commanded
-	    shapeRenderer.setProjectionMatrix(gameCameraController.getCamera().combined);
-		shapeRenderer.begin(ShapeType.Filled);
-	    
-		//draw all of the dynamic objects, we only draw circles to indicate the "drop" triggers right now
-		for (int i = 0; i < objects.size(); i++){
-			objects.get(i).draw(shapeRenderer);
-		}
-		
-	    shapeRenderer.end();
 		renderer.render(world, gameCameraController.getCamera().combined);
 		
 		// Call sprite batch version of draw now
@@ -181,6 +166,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.R) {
+			objects.clear();
 			buildWorld(1);
 		}
 		return false;

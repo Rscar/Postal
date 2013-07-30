@@ -89,11 +89,6 @@ public class Player extends GenericObject{
 	    }
 	}
 	
-	@Override
-	public void draw(ShapeRenderer shapeRenderer) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
 	public Sprite getSprite() {
