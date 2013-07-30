@@ -11,9 +11,6 @@ public class GameCameraController {
 	private OrthographicCamera camera;
 	private GameScreen screen;
 	
-	// Going to be used as boundary check for camera.
-	private BoundingBox bounds;
-	
 	public GameCameraController(GameScreen screen){
 		
 		this.screen = screen;

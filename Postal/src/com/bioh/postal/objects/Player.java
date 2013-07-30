@@ -79,6 +79,8 @@ public class Player extends GenericObject{
 	    
 	    sprite = new Sprite(postal.assetManager.get("sprites/platform.png", Texture.class));
 		sprite.setSize(22,4);
+		
+		// Make sure you set your origin to correspond to the center of the body.
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/4);
 		
 	}
@@ -109,9 +111,13 @@ public class Player extends GenericObject{
 	
 	@Override
 	public void draw(SpriteBatch batch) {
+		
 		sprite.setRotation(playerBody.getAngle() * MathUtils.radiansToDegrees);
+		
+		// Divide by 4 because we are only offsetting the sprite by 1. The sprite is taller than the body, if
+		// you were to offset it by half the sprite's height it would be below the body!
 		sprite.setPosition(playerBody.getPosition().x - sprite.getWidth()/2, playerBody.getPosition().y - sprite.getHeight()/4);
-		System.out.println("Body height at " + playerBody.getPosition().y + " sprite Height at " + (playerBody.getPosition().y - sprite.getHeight()/4));
+		
 		sprite.draw(batch);
 	}
 	

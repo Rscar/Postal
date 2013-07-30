@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.bioh.postal.Postal;
 import com.bioh.postal.objects.MountedCube;
@@ -31,11 +32,19 @@ public class GenericLevelBuilder {
 		//loop through objects, adding the polygons defined in the tmx file
 		//we need to scale, considering map renders at .5 size
 		tempLayer = map.getLayers().get("static");
+		
+		Integer tileSize = (Integer) map.getProperties().get("tilewidth");
+		Integer mapWidth = (Integer) map.getProperties().get("width");
+		Integer mapHeight = (Integer) map.getProperties().get("height");
+		mapWidth = mapWidth * tileSize;
+		mapHeight = mapHeight * tileSize;
 
 		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
 			tempObject = tempLayer.getObjects().get(i);
 
 			tempPolygon = ((PolygonMapObject) tempObject).getPolygon();
+			
+			System.out.println(tempPolygon.getX());
 			
 			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
 			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
@@ -43,7 +52,15 @@ public class GenericLevelBuilder {
 			new StaticBox(new Vector2(xTemp, yTemp), tempPolygon, gameScreen);
 		}
 		
+		// Set up boundaries at map limits.
+		Polygon leftBoundary = new Polygon(new float[]{0,0, 1,0, 1,mapHeight, 0,mapHeight});
+//		Polygon rightBoundary = new Polygon(new float[]{mapWidth-1,0, mapWidth,0, mapWidth-1,mapHeight, mapWidth,mapHeight});
+		Polygon rightBoundary = new Polygon(new float[]{3,0, 4,0, 4,mapHeight, 3,mapHeight});
+		new StaticBox(new Vector2(0,0), leftBoundary,gameScreen);
 		
+		// Right boundary y u no draw (I've been replacing it with stuff just to see if it will draw anywhere...)
+		new StaticBox(new Vector2(3, 0), rightBoundary, gameScreen);
+				
 		//open up player layer
 		//there is only one player, but just for sake of convention it is in a for loop
 		//add the player
