@@ -53,13 +53,11 @@ public class GenericLevelBuilder {
 		}
 		
 		// Set up boundaries at map limits.
-		Polygon leftBoundary = new Polygon(new float[]{0,0, 1,0, 1,mapHeight, 0,mapHeight});
-//		Polygon rightBoundary = new Polygon(new float[]{mapWidth-1,0, mapWidth,0, mapWidth-1,mapHeight, mapWidth,mapHeight});
-		Polygon rightBoundary = new Polygon(new float[]{3,0, 4,0, 4,mapHeight, 3,mapHeight});
-		new StaticBox(new Vector2(0,0), leftBoundary,gameScreen);
+		Polygon boundary = new Polygon(new float[]{0,0, 1,0, 1,mapHeight, 0,mapHeight});
+		new StaticBox(new Vector2(0,0), boundary, gameScreen);
 		
 		// Right boundary y u no draw (I've been replacing it with stuff just to see if it will draw anywhere...)
-		new StaticBox(new Vector2(3, 0), rightBoundary, gameScreen);
+		new StaticBox(new Vector2(-mapWidth/2, 0), boundary, gameScreen);
 				
 		//open up player layer
 		//there is only one player, but just for sake of convention it is in a for loop
