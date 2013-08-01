@@ -18,7 +18,7 @@ public class MountedCube extends GenericObject{
 	private GameScreen gameScreen;
 	private Postal postal;
 	
-	private Body blockBody;
+	private Body body;
 	private boolean mounted = true;
 	
 	//this is our ice cube, to be picked up by the player
@@ -46,15 +46,15 @@ public class MountedCube extends GenericObject{
 	    blockFixture.friction = 0.1f;
 	    blockFixture.restitution = 0.01f;
 	     
-	    blockBody = gameScreen.getWorld().createBody(blockDef);
-	    blockBody.setLinearDamping(0.2f);
-	    blockBody.createFixture(blockFixture);
+	    body = gameScreen.getWorld().createBody(blockDef);
+	    body.setLinearDamping(0.2f);
+	    body.createFixture(blockFixture);
 	    
 	    sprite = new Sprite(postal.assetManager.get("sprites/cube.png", Texture.class));
 		sprite.setSize(8,8);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 	      
-	    System.out.println("cube created at " + blockBody.getPosition());
+	    System.out.println("cube created at " + body.getPosition());
 		
 	}
 
@@ -62,17 +62,17 @@ public class MountedCube extends GenericObject{
 	public void update() {
 
 		//if the block moves at all, "drop" it
-		if (blockBody.getLinearVelocity().x > 0 || blockBody.getLinearVelocity().y > 0){
+		if (body.getLinearVelocity().x > 0 || body.getLinearVelocity().y > 0){
 			mounted = false;
 		}
 
 		if (mounted){
-			blockBody.applyForceToCenter(new Vector2(0,(float) (9.8 * blockBody.getMass())), false);
+			body.applyForceToCenter(new Vector2(0,(float) (9.8 * body.getMass())), false);
 		}
 		
 		Mothership mothership = gameScreen.getMothership();
 		
-		if (Math.abs(mothership.position.x - blockBody.getPosition().x) < 10 && Math.abs(mothership.position.y - blockBody.getPosition().y)< 10) {
+		if (Math.abs(mothership.position.x - body.getPosition().x) < 10 && Math.abs(mothership.position.y - body.getPosition().y)< 10) {
 			flaggedForDelete = true;
 			gameScreen.incrementScore();
 		}
@@ -82,19 +82,9 @@ public class MountedCube extends GenericObject{
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		sprite.setRotation(blockBody.getAngle() * MathUtils.radiansToDegrees);
-		sprite.setPosition(blockBody.getPosition().x - sprite.getWidth()/2, blockBody.getPosition().y - sprite.getHeight()/2);
+		sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
 		sprite.draw(batch);
-	}
-	
-	@Override
-	public Sprite getSprite() {
-		return sprite;
-	}
-	
-	@Override
-	public Body getBody() {
-		return blockBody;
 	}
 
 

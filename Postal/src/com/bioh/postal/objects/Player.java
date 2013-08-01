@@ -106,13 +106,6 @@ public class Player extends GenericObject{
 	    }
 	}
 	
-	
-	@Override
-	public Sprite getSprite() {
-		// TODO
-		return new Sprite();
-	}
-	
 	@Override
 	public void draw(SpriteBatch batch) {
 		
