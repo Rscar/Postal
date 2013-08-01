@@ -31,6 +31,7 @@ public class LevelBuilder1 extends GenericLevelBuilder{
 		postal.assetManager.setLoader(Texture.class, new TextureLoader(new InternalFileHandleResolver()));
 		postal.assetManager.load("sprites/cube.png", Texture.class);
 		postal.assetManager.load("sprites/platform.png", Texture.class);
+		postal.assetManager.load("sprites/ufo.png", Texture.class);
 
 		// Block while loading assets.
 		while(!postal.assetManager.update()) {

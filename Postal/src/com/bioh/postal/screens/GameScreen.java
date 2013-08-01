@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -19,11 +20,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.GameCameraController;
 import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
 import com.bioh.postal.objects.GenericObject;
+import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.Player;
 
 public class GameScreen extends GenericScreen implements InputProcessor{
@@ -41,7 +44,11 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private boolean leftPressed;
 	private boolean rightPressed;
 	
+	private Integer score;
+	
 	private ArrayList<GenericObject> objects = new ArrayList<GenericObject>();
+
+	private BitmapFont font;
 
 	public GameScreen(int level){
 		
@@ -77,6 +84,10 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(levelBuilder.getMap(), 0.5f);
 		
 		gameCameraController = new GameCameraController(this);
+		
+		score = 0;
+		
+		font = new BitmapFont();
 
 	}
 	
@@ -122,6 +133,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		gameCameraController.update();
 		
 		world.step(1/30f, 2, 6);
+		cleanupObjects();
 		
 	}
 
@@ -141,6 +153,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		for (int i = 0; i < objects.size(); i++){
 			objects.get(i).draw(batch);
 		}
+		// Draw score
+		font.draw(batch, score.toString(), gameCameraController.getCamera().position.x + 10, gameCameraController.getCamera().position.y + 10);
 		batch.end();	
 
 	}
@@ -149,12 +163,30 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		return levelBuilder.getPlayer();
 	}
 	
+	public void incrementScore() {
+		score++;
+	}
+	
 	public Map getMap(){
 		return levelBuilder.getMap();
 	}
 	
+	public Mothership getMothership() {
+		return levelBuilder.getMothership();
+	}
+	
 	public void addObject(GenericObject object){
 		objects.add(object);
+	}
+	
+	public void cleanupObjects() {
+		for (int i = 0; i < objects.size(); i++) {
+			if (objects.get(i).flaggedForDelete) {
+				Body body = objects.get(i).getBody();
+//				world.destroyBody(body);
+//				objects.set(i, null);
+			}
+		}
 	}
 
 	@Override

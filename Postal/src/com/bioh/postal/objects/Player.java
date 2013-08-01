@@ -1,6 +1,9 @@
 package com.bioh.postal.objects;
 
+import java.text.DecimalFormat;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,10 +29,9 @@ public class Player extends GenericObject{
 	private Vector2 rightThrusterForce = new Vector2();
 	private Vector2 leftThrusterForce = new Vector2();
 	
-	private Sprite sprite;
-	private Postal postal;
+	private BitmapFont font;
 	
-	private Body playerBody;
+	private Postal postal;
 	
 	private float thrustAmount = 400f;
 
@@ -41,7 +43,7 @@ public class Player extends GenericObject{
 	    playerDef.type = BodyType.DynamicBody;
 	    playerDef.position.set(new Vector2(initpos.x, initpos.y));
  
-	    playerBody = gameScreen.getWorld().createBody(playerDef);
+	    body = gameScreen.getWorld().createBody(playerDef);
 	      
 	    PolygonShape shipShape = new PolygonShape();
 	    shipShape.setAsBox(9, 1);
@@ -71,11 +73,11 @@ public class Player extends GenericObject{
 	    playerFixture3.friction = 0.8f;
 	    playerFixture3.restitution = 0.4f;
 	     
-	    playerBody.setLinearDamping(0.2f);
-	    playerBody.setAngularDamping(0.9f);
-	    playerBody.createFixture(playerFixture);
-	    playerBody.createFixture(playerFixture2);
-	    playerBody.createFixture(playerFixture3);
+	    body.setLinearDamping(0.2f);
+	    body.setAngularDamping(0.9f);
+	    body.createFixture(playerFixture);
+	    body.createFixture(playerFixture2);
+	    body.createFixture(playerFixture3);
 	    
 	    sprite = new Sprite(postal.assetManager.get("sprites/platform.png", Texture.class));
 		sprite.setSize(22,4);
@@ -83,22 +85,24 @@ public class Player extends GenericObject{
 		// Make sure you set your origin to correspond to the center of the body.
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/4);
 		
+		// Debug
+		font = new BitmapFont();
 	}
 	
 	@Override
 	public void update(){
-		rightThrusterLoc.set(playerBody.getWorldCenter().x + MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 3,playerBody.getWorldCenter().y + MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 3);
-		leftThrusterLoc.set(playerBody.getWorldCenter().x - MathUtils.sin(-playerBody.getAngle() + MathUtils.PI/2) * 3,playerBody.getWorldCenter().y - MathUtils.cos(-playerBody.getAngle() + MathUtils.PI/2) * 3);
+		rightThrusterLoc.set(body.getWorldCenter().x + MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y + MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
+		leftThrusterLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
 
-		rightThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount);
-		leftThrusterForce.set(MathUtils.cos(playerBody.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount, MathUtils.sin(playerBody.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount);
+		rightThrusterForce.set(MathUtils.cos(body.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount, MathUtils.sin(body.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount);
+		leftThrusterForce.set(MathUtils.cos(body.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount, MathUtils.sin(body.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount);
 
 		
 		if(rightThrusterOn){	 
-			playerBody.applyForce(rightThrusterForce, rightThrusterLoc, true);
+			body.applyForce(rightThrusterForce, rightThrusterLoc, true);
 	    }
 	    if(leftThrusterOn){	 
-	    	playerBody.applyForce(leftThrusterForce, leftThrusterLoc, true);
+	    	body.applyForce(leftThrusterForce, leftThrusterLoc, true);
 	    }
 	}
 	
@@ -112,13 +116,17 @@ public class Player extends GenericObject{
 	@Override
 	public void draw(SpriteBatch batch) {
 		
-		sprite.setRotation(playerBody.getAngle() * MathUtils.radiansToDegrees);
+		sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 		
 		// Divide by 4 because we are only offsetting the sprite by 1. The sprite is taller than the body, if
 		// you were to offset it by half the sprite's height it would be below the body!
-		sprite.setPosition(playerBody.getPosition().x - sprite.getWidth()/2, playerBody.getPosition().y - sprite.getHeight()/4);
+		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/4);
 		
 		sprite.draw(batch);
+		
+		// Debug stats
+		DecimalFormat format = new DecimalFormat("0.00");
+		font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 	
 	public void setLeft(boolean left){
@@ -130,11 +138,11 @@ public class Player extends GenericObject{
 	}
 	
 	public Vector2 getPosition(){
-		return playerBody.getWorldCenter();
+		return body.getWorldCenter();
 	}
 	
 	public Vector2 getVelocity(){
-		return playerBody.getLinearVelocity();
+		return body.getLinearVelocity();
 	}
 	
 }

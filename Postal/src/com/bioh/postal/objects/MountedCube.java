@@ -16,7 +16,6 @@ import com.bioh.postal.screens.GameScreen;
 public class MountedCube extends GenericObject{
 	
 	private GameScreen gameScreen;
-	private Sprite sprite;
 	private Postal postal;
 	
 	private Body blockBody;
@@ -70,6 +69,13 @@ public class MountedCube extends GenericObject{
 		if (mounted){
 			blockBody.applyForceToCenter(new Vector2(0,(float) (9.8 * blockBody.getMass())), false);
 		}
+		
+		Mothership mothership = gameScreen.getMothership();
+		
+		if (Math.abs(mothership.position.x - blockBody.getPosition().x) < 10 && Math.abs(mothership.position.y - blockBody.getPosition().y)< 10) {
+			flaggedForDelete = true;
+			gameScreen.incrementScore();
+		}
 
 	}
 
@@ -84,6 +90,11 @@ public class MountedCube extends GenericObject{
 	@Override
 	public Sprite getSprite() {
 		return sprite;
+	}
+	
+	@Override
+	public Body getBody() {
+		return blockBody;
 	}
 
 

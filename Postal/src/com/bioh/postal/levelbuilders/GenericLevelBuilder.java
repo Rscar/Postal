@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.bioh.postal.Postal;
+import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.MountedCube;
 import com.bioh.postal.objects.Player;
 import com.bioh.postal.objects.StaticBox;
@@ -16,6 +17,7 @@ import com.bioh.postal.screens.GameScreen;
 public class GenericLevelBuilder {
 	
 	protected Player player;
+	protected Mothership mothership;
 	protected GameScreen gameScreen;
 	protected Postal postal;
 	
@@ -75,6 +77,20 @@ public class GenericLevelBuilder {
 			gameScreen.addObject(player);
 
 		}
+		
+		// Open up mothership layer and instantiate
+		tempLayer = map.getLayers().get("mothership");
+		
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++) {
+			tempObject = tempLayer.getObjects().get(i);
+			
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			//create a mothership
+			mothership = new Mothership(new Vector2(xTemp, yTemp), gameScreen);
+			gameScreen.addObject(mothership);
+		}
 
 		//open the blocks layer
 		//loop through the objects, add blocks
@@ -96,6 +112,10 @@ public class GenericLevelBuilder {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public Mothership getMothership() {
+		return mothership;
 	}
 	
 	public TiledMap getMap() {
