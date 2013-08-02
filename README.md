@@ -2,4 +2,4 @@ Post Invasion
 =============
 
 
-A cool game by 2 cool dudes. + xylol maybe
+Mobile game. 4 doods. It's gonna be zoppity
