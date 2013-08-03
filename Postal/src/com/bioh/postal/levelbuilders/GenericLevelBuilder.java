@@ -1,5 +1,9 @@
 package com.bioh.postal.levelbuilders;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -27,6 +31,8 @@ public class GenericLevelBuilder {
 	private Polygon tempPolygon;
 	private int xTemp;
 	private int yTemp;
+	
+	private ParticleEffect tempEffect;
 	
 	public void build() {
 
@@ -103,6 +109,26 @@ public class GenericLevelBuilder {
 			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
 			
 			gameScreen.addObject(new MountedCube(new Vector2(xTemp, yTemp), gameScreen));
+		}
+		
+
+		tempLayer = map.getLayers().get("fire");
+
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
+			
+			tempEffect = new ParticleEffect();
+			tempEffect.load(Gdx.files.internal("particles/fire1.p"), Gdx.files.internal("particles"));
+			
+			tempObject = tempLayer.getObjects().get(i);
+			
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			//if ((Integer) tempObject.getProperties().get("type") == 1){
+				tempEffect.setPosition(xTemp, yTemp);
+			///}
+					
+			gameScreen.addParticleEffect(tempEffect);
 		}
 		
 	}

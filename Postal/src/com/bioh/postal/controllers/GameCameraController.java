@@ -37,7 +37,7 @@ public class GameCameraController {
 		//zoom based on players height off the ground
 		camera.position.x = screen.getPlayer().getPosition().x;
 		camera.position.y = (camera.viewportHeight * camera.zoom)/2;
-		camera.zoom = .1f + screen.getPlayer().getPosition().y/600;
+		camera.zoom = 0.1f + screen.getPlayer().getPosition().y/600;
 		
 		
 		if (camera.viewportWidth * camera.zoom > screen.getMap().getProperties().get("width", Integer.class) * screen.getMap().getProperties().get("tilewidth", Integer.class)/2){

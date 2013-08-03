@@ -8,6 +8,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -23,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.GameCameraController;
+import com.bioh.postal.controllers.ParticleController;
 import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
 import com.bioh.postal.objects.GenericObject;
@@ -37,6 +40,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private World world;
 	private GenericLevelBuilder levelBuilder;
 	private GameCameraController gameCameraController;
+	private ParticleController particleController;
 	private Postal postal;
 	
 	private SpriteBatch batch;
@@ -55,6 +59,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		Gdx.input.setInputProcessor(this);
 		batch = new SpriteBatch();
 		
+		
 		buildWorld(level);
 		
 	}
@@ -64,6 +69,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		postal = Postal.getInstance();
 		
 		world = new World(new Vector2(0, -9.8f), false);
+		particleController = new ParticleController();
 		
 		//will control what level we build
 		//loads a different builder based on level
@@ -129,6 +135,9 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 			objects.get(i).update();
 		}
 		
+		//update each of the particles
+		particleController.update(delta);
+		
 		//update camera controller separately...its not really a dynamic object
 		gameCameraController.update();
 		
@@ -145,7 +154,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	    
 	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
 	    tiledMapRenderer.render();
-		renderer.render(world, gameCameraController.getCamera().combined);
+		//renderer.render(world, gameCameraController.getCamera().combined);
 		
 		// Call sprite batch version of draw now
 		batch.setProjectionMatrix(gameCameraController.getCamera().combined);
@@ -153,6 +162,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		for (int i = 0; i < objects.size(); i++){
 			objects.get(i).draw(batch);
 		}
+		//draw particles
+		particleController.draw(batch);
 		// Draw score
 		font.draw(batch, score.toString(), gameCameraController.getCamera().position.x + 10, gameCameraController.getCamera().position.y + 10);
 		batch.end();	
@@ -177,6 +188,10 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public void addObject(GenericObject object){
 		objects.add(object);
+	}
+	
+	public void addParticleEffect(ParticleEffect effect){
+		particleController.addParticleEffect(effect);
 	}
 	
 	public void cleanupObjects() {
