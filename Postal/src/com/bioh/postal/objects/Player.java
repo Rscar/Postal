@@ -23,6 +23,9 @@ public class Player extends GenericObject{
 	private boolean rightThrusterOn;
 	private boolean leftThrusterOn;
 	
+	private Vector2 rightThrusterVisibleLoc = new Vector2();
+	private Vector2 leftThrusterVisibleLoc = new Vector2();
+	
 	private Vector2 rightThrusterLoc = new Vector2();
 	private Vector2 leftThrusterLoc = new Vector2();
 	
@@ -91,6 +94,12 @@ public class Player extends GenericObject{
 	
 	@Override
 	public void update(){
+		
+		//this is where the thruster is visible...for calculating where to put the thruster graphics
+		rightThrusterVisibleLoc.set(body.getWorldCenter().x + MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 10,body.getWorldCenter().y + MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 10);
+		leftThrusterVisibleLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 10,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 10);
+		
+		//this is where the force is actually applied, closer to the center to minimize the amount of spin the ship experiences
 		rightThrusterLoc.set(body.getWorldCenter().x + MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y + MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
 		leftThrusterLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
 
@@ -114,12 +123,11 @@ public class Player extends GenericObject{
 		// Divide by 4 because we are only offsetting the sprite by 1. The sprite is taller than the body, if
 		// you were to offset it by half the sprite's height it would be below the body!
 		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/4);
-		
 		sprite.draw(batch);
 		
 		// Debug stats
 		DecimalFormat format = new DecimalFormat("0.00");
-		font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
+		//font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 	
 	public void setLeft(boolean left){
@@ -128,6 +136,26 @@ public class Player extends GenericObject{
 	
 	public void setRight(boolean right){
 		rightThrusterOn = right;
+	}
+	
+	public boolean leftThrusterOn(){
+		return leftThrusterOn;
+	}
+	
+	public boolean rightThrusterOn(){
+		return rightThrusterOn;
+	}
+	
+	public float getRotation(){
+		return body.getAngle() * 180/3.1416f - 90;
+	}
+	
+	public Vector2 getRightThrusterPosition(){
+		return rightThrusterVisibleLoc;
+	}
+	
+	public Vector2 getLeftThrusterPosition(){
+		return leftThrusterVisibleLoc;
 	}
 	
 	public Vector2 getPosition(){

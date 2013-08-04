@@ -33,6 +33,7 @@ public class GenericLevelBuilder {
 	private int yTemp;
 	
 	private ParticleEffect tempEffect;
+	private ParticleEffect tempEffect2;
 	
 	public void build() {
 
@@ -112,23 +113,29 @@ public class GenericLevelBuilder {
 		}
 		
 
+		//this tmx will have a layer named "fire"
+		//the layer will contain objects with a property named "type"
+		//type 1 - fire and smoke, average size
 		tempLayer = map.getLayers().get("fire");
 
 		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
-			
+
 			tempEffect = new ParticleEffect();
-			tempEffect.load(Gdx.files.internal("particles/fire1.p"), Gdx.files.internal("particles"));
-			
+			tempEffect2 = new ParticleEffect();
 			tempObject = tempLayer.getObjects().get(i);
 			
 			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
 			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
 			
-			//if ((Integer) tempObject.getProperties().get("type") == 1){
+			if (tempObject.getProperties().get("type").equals("1")){
+				tempEffect.load(Gdx.files.internal("particles/fire1.p"), Gdx.files.internal("particles"));
 				tempEffect.setPosition(xTemp, yTemp);
-			///}
+				tempEffect2.load(Gdx.files.internal("particles/smoke1.p"), Gdx.files.internal("particles"));
+				tempEffect2.setPosition(xTemp, yTemp);
+			}
 					
 			gameScreen.addParticleEffect(tempEffect);
+			gameScreen.addParticleEffect(tempEffect2);
 		}
 		
 	}

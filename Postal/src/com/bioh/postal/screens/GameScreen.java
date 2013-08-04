@@ -9,20 +9,13 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.GameCameraController;
 import com.bioh.postal.controllers.ParticleController;
@@ -136,7 +129,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		}
 		
 		//update each of the particles
-		particleController.update(delta);
+		particleController.update(delta, levelBuilder.getPlayer());
 		
 		//update camera controller separately...its not really a dynamic object
 		gameCameraController.update();
@@ -165,7 +158,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		//draw particles
 		particleController.draw(batch);
 		// Draw score
-		font.draw(batch, score.toString(), gameCameraController.getCamera().position.x + 10, gameCameraController.getCamera().position.y + 10);
+		font.draw(batch, score.toString(), -gameCameraController.getCamera().position.x/2 + 10, -gameCameraController.getCamera().position.y/2 + 10);
 		batch.end();	
 
 	}
