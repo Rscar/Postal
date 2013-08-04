@@ -155,11 +155,16 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		for (int i = 0; i < objects.size(); i++){
 			objects.get(i).draw(batch);
 		}
+		
+		float offsetX = gameCameraController.getCamera().viewportWidth * gameCameraController.getCamera().zoom/2 - 10;
+		float offsetY = gameCameraController.getCamera().viewportHeight * gameCameraController.getCamera().zoom/2 - 20;
+		
+		// Draw score
+		font.draw(batch, score.toString(), gameCameraController.getCamera().position.x - offsetX, gameCameraController.getCamera().position.y - offsetY);
+				
 		//draw particles
 		particleController.draw(batch);
-		// Draw score
-		font.draw(batch, score.toString(), -gameCameraController.getCamera().position.x/2 + 10, -gameCameraController.getCamera().position.y/2 + 10);
-		batch.end();	
+		batch.end();
 
 	}
 	

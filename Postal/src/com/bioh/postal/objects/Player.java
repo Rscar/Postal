@@ -127,7 +127,7 @@ public class Player extends GenericObject{
 		
 		// Debug stats
 		DecimalFormat format = new DecimalFormat("0.00");
-		//font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
+//		font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 	
 	public void setLeft(boolean left){

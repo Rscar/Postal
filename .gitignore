@@ -218,4 +218,4 @@ pip-log.txt
 packmaps.sh
 
 # Stupid GWT bullshit
-.class
+*.class
