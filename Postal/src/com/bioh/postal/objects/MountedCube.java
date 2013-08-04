@@ -62,7 +62,7 @@ public class MountedCube extends GenericObject{
 	public void update() {
 
 		//if the block moves at all, "drop" it
-		if (body.getLinearVelocity().x > 0 || body.getLinearVelocity().y > 0){
+		if (body.getLinearVelocity().x != 0 || body.getLinearVelocity().y != 0){
 			mounted = false;
 		}
 
