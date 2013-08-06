@@ -18,7 +18,6 @@ public class MountedCube extends GenericObject{
 	private GameScreen gameScreen;
 	private Postal postal;
 	
-	private Body body;
 	private boolean mounted = true;
 	
 	//this is our ice cube, to be picked up by the player

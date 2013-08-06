@@ -134,8 +134,9 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		//update camera controller separately...its not really a dynamic object
 		gameCameraController.update();
 		
-		world.step(1/30f, 2, 6);
 		cleanupObjects();
+		world.step(1/30f, 2, 6);
+		
 		
 	}
 
@@ -195,9 +196,9 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	public void cleanupObjects() {
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects.get(i).flaggedForDelete) {
-				Body body = objects.get(i).getBody();
-//				world.destroyBody(body);
-//				objects.set(i, null);
+				GenericObject obj = objects.remove(i);
+				Body body = obj.getBody();
+				world.destroyBody(body);
 			}
 		}
 	}
