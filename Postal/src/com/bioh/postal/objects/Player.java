@@ -124,10 +124,9 @@ public class Player extends GenericObject{
 		// you were to offset it by half the sprite's height it would be below the body!
 		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/4);
 		sprite.draw(batch);
-		
 		// Debug stats
-		DecimalFormat format = new DecimalFormat("0.00");
-//		font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
+				DecimalFormat format = new DecimalFormat("0.00");
+				font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 	
 	public void setLeft(boolean left){

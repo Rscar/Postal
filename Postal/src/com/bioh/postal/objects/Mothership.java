@@ -1,6 +1,9 @@
 package com.bioh.postal.objects;
 
+import java.text.DecimalFormat;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +19,7 @@ public class Mothership extends GenericObject {
 	private GameScreen gameScreen;
 	private Sprite sprite;
 	private Postal postal;
+	private BitmapFont font;
 	
 	public Vector2 position;
 	
@@ -43,6 +47,7 @@ public class Mothership extends GenericObject {
 		sprite.setSize(80, 4);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		
+		font = new BitmapFont();
 	}
 	
 	@Override
@@ -55,7 +60,9 @@ public class Mothership extends GenericObject {
 	public void draw(SpriteBatch batch) {
 		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
 		sprite.draw(batch);
-		
+		// Debug stats
+				DecimalFormat format = new DecimalFormat("0.00");
+				font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.bioh.postal.objects;
 
+import java.text.DecimalFormat;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -19,13 +22,14 @@ public class MountedCube extends GenericObject{
 	private Postal postal;
 	
 	private boolean mounted = true;
+	private BitmapFont font;
 	
 	//this is our ice cube, to be picked up by the player
 	public MountedCube(Vector2 position, GameScreen gameScreen){
 	
 		this.gameScreen = gameScreen;
 		postal = Postal.getInstance();
-		
+		font = new BitmapFont();
 		
 		
 		//starts off as a static object
@@ -71,7 +75,12 @@ public class MountedCube extends GenericObject{
 		
 		Mothership mothership = gameScreen.getMothership();
 		
-		if (Math.abs(mothership.position.x - body.getPosition().x) < 10 && Math.abs(mothership.position.y - body.getPosition().y)< 10) {
+		if (Math.abs(mothership.position.x - body.getPosition().x) < 30 && mothership.position.y - body.getPosition().y < 50) {
+			body.applyForceToCenter(mothership.position.sub(body.getPosition()).scl(5), false);
+		}
+		
+		if (Math.abs(mothership.position.x - body.getPosition().x) < 10 && mothership.position.y - body.getPosition().y < 20) {
+			System.out.println("Should be deleting!");
 			flaggedForDelete = true;
 			gameScreen.incrementScore();
 		}
@@ -84,6 +93,10 @@ public class MountedCube extends GenericObject{
 		sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
 		sprite.draw(batch);
+		
+		// Debug stats
+				DecimalFormat format = new DecimalFormat("0.00");
+				font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 
 
