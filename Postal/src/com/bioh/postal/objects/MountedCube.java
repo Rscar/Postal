@@ -75,15 +75,16 @@ public class MountedCube extends GenericObject{
 		
 		Mothership mothership = gameScreen.getMothership();
 		
-		if (Math.abs(mothership.position.x - body.getPosition().x) < 30 && mothership.position.y - body.getPosition().y < 50) {
-			body.applyForceToCenter(mothership.position.sub(body.getPosition()).scl(5), false);
-		}
 		
-		if (Math.abs(mothership.position.x - body.getPosition().x) < 10 && mothership.position.y - body.getPosition().y < 20) {
-			System.out.println("Should be deleting!");
+		if ((Math.abs(mothership.position.x - body.getPosition().x) < 10) && (mothership.position.y - body.getPosition().y < 20)) {
+			System.out.println("Position:" + body.getPosition() + " Mothership Position:" + mothership.position);
 			flaggedForDelete = true;
 			gameScreen.incrementScore();
+		} else if (Math.abs(mothership.position.x - body.getPosition().x) < 30 && mothership.position.y - body.getPosition().y < 50) {
+			body.applyForceToCenter(mothership.position.cpy().sub(body.getPosition()).scl(5), false);
 		}
+		
+		
 
 	}
 
