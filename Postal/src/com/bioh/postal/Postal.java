@@ -27,7 +27,7 @@ public class Postal extends Game implements ApplicationListener{
 		screenController = new ScreenController();
 		
 		//initially set the screen to a gamescreen level 1, will later change
-		setScreen (new GameScreen(1));
+		setScreen (new GameScreen(2));
 
 	}
 

@@ -8,10 +8,10 @@ lowMax: 6000.0
 min: 0
 max: 150
 - Emission - 
-lowMin: 4.0
-lowMax: 4.0
-highMin: 10.0
-highMax: 10.0
+lowMin: 1.0
+lowMax: 1.0
+highMin: 1.0
+highMax: 4.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -118,7 +118,16 @@ timeline0: 0.0
 timeline1: 0.5
 timeline2: 1.0
 - Rotation - 
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 90.0
+relative: false
+scalingCount: 1
+scaling0: 0.0
+timelineCount: 1
+timeline0: 0.0
 - Wind - 
 active: true
 lowMin: 0.0
@@ -149,13 +158,13 @@ highMax: 1.0
 relative: false
 scalingCount: 4
 scaling0: 0.0
-scaling1: 0.22807017
-scaling2: 0.36842105
+scaling1: 0.49122807
+scaling2: 0.57894737
 scaling3: 0.0
 timelineCount: 4
 timeline0: 0.0
-timeline1: 0.51369864
-timeline2: 0.6232877
+timeline1: 0.55479455
+timeline2: 0.72602737
 timeline3: 1.0
 - Options - 
 attached: false
@@ -164,4 +173,4 @@ aligned: false
 additive: true
 behind: false
 - Image Path -
-C:\Users\RSCAR\Documents\GitHub\Postal\Postal-android\assets\particles\particle.png
+C:\Users\RSCAR\Documents\GitHub\Postal\Postal-android\assets\particles\particle2.png

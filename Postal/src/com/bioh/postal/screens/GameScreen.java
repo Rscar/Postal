@@ -21,6 +21,7 @@ import com.bioh.postal.controllers.GameCameraController;
 import com.bioh.postal.controllers.ParticleController;
 import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
+import com.bioh.postal.levelbuilders.LevelBuilder2;
 import com.bioh.postal.objects.GenericObject;
 import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.Player;
@@ -42,6 +43,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private boolean rightPressed;
 	
 	private Integer score;
+	private int currentLevel;
 	
 	private ArrayList<GenericObject> objects = new ArrayList<GenericObject>();
 
@@ -61,16 +63,19 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		
 		postal = Postal.getInstance();
 		
+		this.currentLevel = level;
+		
 		world = new World(new Vector2(0, -9.8f), false);
 		particleController = new ParticleController();
 		
 		//will control what level we build
 		//loads a different builder based on level
-		switch (level){
+		switch (currentLevel){
 		case 1:
 			levelBuilder = new LevelBuilder1(this);
 			break;
 		case 2:
+			levelBuilder = new LevelBuilder2(this);
 			break;
 		case 3:
 			break;
@@ -213,7 +218,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.R) {
 			objects.clear();
-			buildWorld(1);
+			buildWorld(currentLevel);
 		}
 		return false;
 	}

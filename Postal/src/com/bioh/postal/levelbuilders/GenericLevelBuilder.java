@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.bioh.postal.Postal;
+import com.bioh.postal.objects.LaserCow;
+import com.bioh.postal.objects.LaserCow;
 import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.MountedCube;
 import com.bioh.postal.objects.Player;
@@ -110,6 +112,17 @@ public class GenericLevelBuilder {
 			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
 			
 			gameScreen.addObject(new MountedCube(new Vector2(xTemp, yTemp), gameScreen));
+		}
+		
+		tempLayer = map.getLayers().get("cow");
+
+		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
+			tempObject = tempLayer.getObjects().get(i);
+	
+			xTemp = (Integer) tempObject.getProperties().get("x") / 2;
+			yTemp = (Integer) tempObject.getProperties().get("y") / 2;
+			
+			gameScreen.addObject(new LaserCow(new Vector2(xTemp, yTemp), gameScreen));
 		}
 		
 

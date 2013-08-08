@@ -70,7 +70,7 @@
   <object x="45" y="525" width="10" height="9"/>
  </objectgroup>
  <objectgroup name="mothership" width="36" height="30">
-  <object x="499" y="389" width="157" height="16"/>
+  <object x="487" y="480" width="157" height="16"/>
  </objectgroup>
  <objectgroup name="fire" width="36" height="30">
   <object x="384" y="768">
@@ -108,5 +108,8 @@
     <property name="type" value="1"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="cow" width="36" height="30">
+  <object x="331" y="591" width="32" height="32"/>
  </objectgroup>
 </map>

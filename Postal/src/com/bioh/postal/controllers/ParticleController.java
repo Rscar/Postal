@@ -24,7 +24,6 @@ public class ParticleController {
 	public void addParticleEffect(ParticleEffect effect){
 		effect.start();
 		particleEffects.add(effect);
-		System.out.println("Particle created" + effect.getEmitters().get(0).getX());
 	}
 	
 	public void update(float delta, Player player){
