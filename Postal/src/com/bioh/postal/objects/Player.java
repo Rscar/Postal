@@ -36,7 +36,7 @@ public class Player extends GenericObject{
 	
 	private Postal postal;
 	
-	private float thrustAmount = 400f;
+	private float thrustAmount = 500f;
 
 	
 	public Player(Vector2 initpos, GameScreen gameScreen){
