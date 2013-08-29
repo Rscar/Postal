@@ -2,11 +2,15 @@ package com.bioh.postal.screens;
 
 import java.util.ArrayList;
 
+import aurelienribon.bodyeditor.BodyEditorLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +19,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.GameCameraController;
@@ -25,6 +30,7 @@ import com.bioh.postal.levelbuilders.LevelBuilder2;
 import com.bioh.postal.objects.GenericObject;
 import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.Player;
+import com.bioh.postal.utilites.BodyLoader;
 
 public class GameScreen extends GenericScreen implements InputProcessor{
 	
@@ -35,6 +41,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private GenericLevelBuilder levelBuilder;
 	private GameCameraController gameCameraController;
 	private ParticleController particleController;
+	private BodyLoader loader;
 	private Postal postal;
 	
 	private SpriteBatch batch;
@@ -64,6 +71,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		postal = Postal.getInstance();
 		
 		this.currentLevel = level;
+		
+		loader = new BodyLoader(Gdx.files.internal("physics/postal.json"));
 		
 		world = new World(new Vector2(0, -9.8f), false);
 		particleController = new ParticleController();
@@ -153,7 +162,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	    
 	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
 	    tiledMapRenderer.render();
-		//renderer.render(world, gameCameraController.getCamera().combined);
+		renderer.render(world, gameCameraController.getCamera().combined);
 		
 		// Call sprite batch version of draw now
 		batch.setProjectionMatrix(gameCameraController.getCamera().combined);
@@ -196,6 +205,10 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	
 	public void addParticleEffect(ParticleEffect effect){
 		particleController.addParticleEffect(effect);
+	}
+	
+	public void addFixture(Body body, String name, FixtureDef fixtureDef, float width){
+		loader.attachFixture(body, name, fixtureDef, width);
 	}
 	
 	public void cleanupObjects() {

@@ -2,24 +2,22 @@ package com.bioh.postal.objects;
 
 import java.text.DecimalFormat;
 
+import aurelienribon.bodyeditor.BodyEditorLoader;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.bioh.postal.Postal;
 import com.bioh.postal.screens.GameScreen;
 
 public class Player extends GenericObject{
-	
+
 	private boolean rightThrusterOn;
 	private boolean leftThrusterOn;
 	
@@ -37,53 +35,37 @@ public class Player extends GenericObject{
 	private Postal postal;
 	
 	private float thrustAmount = 500f;
+	private float width = 32f;
+	
+	private float textureWidth;
+	private float textureHeight;
 
 	
 	public Player(Vector2 initpos, GameScreen gameScreen){
 		postal = Postal.getInstance();
 		
+		//create bodydef
 		BodyDef playerDef = new BodyDef();
 	    playerDef.type = BodyType.DynamicBody;
 	    playerDef.position.set(new Vector2(initpos.x, initpos.y));
  
-	    body = gameScreen.getWorld().createBody(playerDef);
-	      
-	    PolygonShape shipShape = new PolygonShape();
-	    shipShape.setAsBox(9, 1);
-
-	    //fixtures are the parts that are attached to the ship body, for now we have 3, one bottom and 2 walls
+	    //create fixturedef
 	    FixtureDef playerFixture = new FixtureDef();
-	    playerFixture.shape = shipShape;
-	    playerFixture.density = 0.9f;
+	    playerFixture.density = 0.15f;
 	    playerFixture.friction = 0.8f;
 	    playerFixture.restitution = 0.4f;
 	    
-	    PolygonShape shipShape2 = new PolygonShape();
-	    shipShape2.setAsBox(1, 2, new Vector2(-10, 1), 0);
-	    
-	    FixtureDef playerFixture2 = new FixtureDef();
-	    playerFixture2.shape = shipShape2;
-	    playerFixture2.density = 0.0f;
-	    playerFixture2.friction = 0.8f;
-	    playerFixture2.restitution = 0.4f;
-	    
-	    PolygonShape shipShape3 = new PolygonShape();
-	    shipShape3.setAsBox(1, 2, new Vector2(10, 1), 0);
-	    
-	    FixtureDef playerFixture3 = new FixtureDef();
-	    playerFixture3.shape = shipShape3;
-	    playerFixture3.density = 0.0f;
-	    playerFixture3.friction = 0.8f;
-	    playerFixture3.restitution = 0.4f;
-	     
+	    body = gameScreen.getWorld().createBody(playerDef);
+
 	    body.setLinearDamping(0.2f);
 	    body.setAngularDamping(0.9f);
-	    body.createFixture(playerFixture);
-	    body.createFixture(playerFixture2);
-	    body.createFixture(playerFixture3);
+	    
+	    gameScreen.addFixture(body, "player", playerFixture, width);
 	    
 	    sprite = new Sprite(postal.assetManager.get("sprites/platform.png", Texture.class));
-		sprite.setSize(22,4);
+	    textureWidth = postal.assetManager.get("sprites/platform.png", Texture.class).getWidth();
+	    textureHeight = postal.assetManager.get("sprites/platform.png", Texture.class).getHeight();
+		sprite.setSize(width , (textureHeight / textureWidth) * width);
 		
 		// Make sure you set your origin to correspond to the center of the body.
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/4);
@@ -100,8 +82,8 @@ public class Player extends GenericObject{
 		leftThrusterVisibleLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 10,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 10);
 		
 		//this is where the force is actually applied, closer to the center to minimize the amount of spin the ship experiences
-		rightThrusterLoc.set(body.getWorldCenter().x + MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y + MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
-		leftThrusterLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 3,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 3);
+		rightThrusterLoc.set(body.getWorldCenter().x + MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 8,body.getWorldCenter().y + MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 8);
+		leftThrusterLoc.set(body.getWorldCenter().x - MathUtils.sin(-body.getAngle() + MathUtils.PI/2) * 8,body.getWorldCenter().y - MathUtils.cos(-body.getAngle() + MathUtils.PI/2) * 8);
 
 		rightThrusterForce.set(MathUtils.cos(body.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount, MathUtils.sin(body.getAngle() + MathUtils.PI/2 + MathUtils.PI/8) * thrustAmount);
 		leftThrusterForce.set(MathUtils.cos(body.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount, MathUtils.sin(body.getAngle() + MathUtils.PI/2 - MathUtils.PI/8) * thrustAmount);
