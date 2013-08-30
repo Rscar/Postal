@@ -37,6 +37,9 @@ public class GenericLevelBuilder {
 	private ParticleEffect tempEffect;
 	private ParticleEffect tempEffect2;
 	
+	private int w;
+	private int h;
+	
 	public void build() {
 
 		//for the static object layer
@@ -49,6 +52,8 @@ public class GenericLevelBuilder {
 		Integer mapHeight = (Integer) map.getProperties().get("height");
 		mapWidth = mapWidth * tileSize;
 		mapHeight = mapHeight * tileSize;
+		w = mapWidth;
+		h = mapHeight;
 
 		for (int i = 0; i < tempLayer.getObjects().getCount(); i++){
 			tempObject = tempLayer.getObjects().get(i);
@@ -151,6 +156,14 @@ public class GenericLevelBuilder {
 			gameScreen.addParticleEffect(tempEffect2);
 		}
 		
+	}
+	
+	public int getWidth(){
+		return w;
+	}
+	
+	public int getHeight(){
+		return h;
 	}
 	
 	public void loadAssets() {

@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public abstract class GenericObject {
+public abstract class GenericObject{
 	
 	public boolean flaggedForDelete = false;
 	protected Body body;

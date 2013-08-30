@@ -3,6 +3,7 @@ package com.bioh.postal.controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.bioh.postal.screens.GameScreen;
 
@@ -17,10 +18,7 @@ public class GameCameraController {
 		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		
-		
-		
-		
+
 		camera = new OrthographicCamera(960, h/w * 960);
 		
 		camera.zoom = .08f;
@@ -62,5 +60,4 @@ public class GameCameraController {
 	public OrthographicCamera getCamera(){
 		return camera;
 	}
-
 }
