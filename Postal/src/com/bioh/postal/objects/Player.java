@@ -1,4 +1,4 @@
-package com.bioh.postal.objects;
+ package com.bioh.postal.objects;
 
 import java.text.DecimalFormat;
 

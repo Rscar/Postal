@@ -1,4 +1,4 @@
-package com.bioh.postal;
+ package com.bioh.postal;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -14,6 +14,19 @@ public class Postal extends Game implements ApplicationListener{
 	public ScreenController screenController;
 	public AssetManager assetManager;
 	public static Postal postal;
+	
+	//test
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//test
 
 	@Override
 	public void create() {	

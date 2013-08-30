@@ -3,11 +3,6 @@
  <tileset firstgid="1" name="tileset3" tilewidth="32" tileheight="32" spacing="4" margin="2">
   <image source="tileset3.png" width="256" height="256"/>
  </tileset>
- <layer name="Tile Layer 2" width="40" height="24">
-  <data encoding="base64" compression="zlib">
-   eJztzjERADAIBLBHQf27xQIb5S5D9lSSAgAAYOx9cLh429ZfvAPd
-  </data>
- </layer>
  <layer name="Tile Layer 1" width="40" height="24">
   <data encoding="base64" compression="zlib">
    eJztktsKgzAMQINzsulkzonX///PJWihBDXJi31YDpzHtqdtABzHcRzHcf6LO1qkjjjhg35TR5wwonPqCEaG3tAc7H1XzAM11bB2WfuumAdqWkDuK9HqwJfhvPBfwb21D7QXfLI19FbtgZY35PvwtdT2RgfBhjWGOZg260jtTEhv0ivb9hrHrYtmoYs6p6hP+hftuRYb5b01d/8B0LsMEA==
