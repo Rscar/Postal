@@ -14,19 +14,6 @@ public class Postal extends Game implements ApplicationListener{
 	public ScreenController screenController;
 	public AssetManager assetManager;
 	public static Postal postal;
-	
-	//test
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//test
 
 	@Override
 	public void create() {	
