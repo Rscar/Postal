@@ -15,7 +15,7 @@ public class Postal extends Game implements ApplicationListener{
 	public AssetManager assetManager;
 	public static Postal postal;
 	
-	//test
+	//test2
 	
 	
 	
@@ -26,7 +26,7 @@ public class Postal extends Game implements ApplicationListener{
 	
 	
 	
-	//test
+	//test2
 
 	@Override
 	public void create() {	
