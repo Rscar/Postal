@@ -97,8 +97,8 @@ public class MountedCube extends GenericObject{
 		sprite.draw(batch);
 		
 		// Debug stats
-				DecimalFormat format = new DecimalFormat("0.00");
-				font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
+		//DecimalFormat format = new DecimalFormat("0.00");
+		//font.draw(batch, "x:" + format.format(body.getPosition().x) + " y:" + format.format(body.getPosition().y), body.getPosition().x, body.getPosition().y + 20);
 	}
 
 

@@ -124,7 +124,7 @@ public class LaserCow extends GenericObject{
 		sprite.setPosition(body.getPosition().x - sprite.getWidth()/2, body.getPosition().y - sprite.getHeight()/2);
 		sprite.draw(batch);
 
-		font.draw(batch,Float.toString(gun.getAngle()), body.getPosition().x, body.getPosition().y + 20);
+		//font.draw(batch,Float.toString(gun.getAngle()), body.getPosition().x, body.getPosition().y + 20);
 		
 	}
 	

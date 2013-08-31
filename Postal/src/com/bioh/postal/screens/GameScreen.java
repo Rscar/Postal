@@ -150,17 +150,17 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 		for (int i = 0; i < objects.size(); i++){
 			objects.get(i).update();
 		}
-		
-		//update each of the background layers
-		for (int i = 0; i < backgroundLayers.size(); i++){
-			backgroundLayers.get(i).update(gameCameraController.getCamera().position.x - levelBuilder.getWidth() / 2, gameCameraController.getCamera().position.y);
-		}
-		
+
 		//update each of the particles
 		particleController.update(delta, levelBuilder.getPlayer());
 		
 		//update camera controller separately...its not really a dynamic object
 		gameCameraController.update();
+		
+		//update each of the background layers
+		for (int i = 0; i < backgroundLayers.size(); i++){
+			backgroundLayers.get(i).update(gameCameraController.getCamera().position.x + (gameCameraController.getCamera().viewportWidth * gameCameraController.getCamera().zoom) / 2 - levelBuilder.getWidth() / 2, gameCameraController.getCamera().position.y, gameCameraController.getCamera().zoom);
+		}
 		
 		cleanupObjects();
 		world.step(1/30f, 2, 6);
