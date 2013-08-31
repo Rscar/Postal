@@ -24,9 +24,9 @@ public class LevelBuilder2 extends GenericLevelBuilder{
 	}
 	
 	public void addBackgroundLayers(){
-		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background3.png", Texture.class), 10f));
-		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background1.png", Texture.class), 5f));
-		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background2.png", Texture.class), 1f));
+		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_3.png", Texture.class), postal.assetManager.get("sprites/background_1_3.png", Texture.class), 10f));
+		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_2_left.png", Texture.class), postal.assetManager.get("sprites/background_1_2_right.png", Texture.class), 5f));
+		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_1_left.png", Texture.class), postal.assetManager.get("sprites/background_1_1_right.png", Texture.class), 1.2f));
 	}
 
 	@Override
@@ -40,9 +40,11 @@ public class LevelBuilder2 extends GenericLevelBuilder{
 		postal.assetManager.load("sprites/lasercowgun.png", Texture.class);
 		postal.assetManager.load("sprites/platform.png", Texture.class);
 		postal.assetManager.load("sprites/ufo.png", Texture.class);
-		postal.assetManager.load("sprites/background1.png", Texture.class);
-		postal.assetManager.load("sprites/background2.png", Texture.class);
-		postal.assetManager.load("sprites/background3.png", Texture.class);
+		postal.assetManager.load("sprites/background_1_1_left.png", Texture.class);
+		postal.assetManager.load("sprites/background_1_1_right.png", Texture.class);
+		postal.assetManager.load("sprites/background_1_2_left.png", Texture.class);
+		postal.assetManager.load("sprites/background_1_2_right.png", Texture.class);
+		postal.assetManager.load("sprites/background_1_3.png", Texture.class);
 
 		// Block while loading assets.
 		while(!postal.assetManager.update()) {
