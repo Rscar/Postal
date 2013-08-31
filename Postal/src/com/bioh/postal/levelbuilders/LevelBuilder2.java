@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.bioh.postal.objects.BackgroundLayer;
+import com.bioh.postal.objects.HudScore;
 import com.bioh.postal.screens.GameScreen;
 import com.bioh.postal.Postal;
 
@@ -27,6 +28,8 @@ public class LevelBuilder2 extends GenericLevelBuilder{
 		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_3.png", Texture.class), postal.assetManager.get("sprites/background_1_3.png", Texture.class), 10f));
 		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_2_left.png", Texture.class), postal.assetManager.get("sprites/background_1_2_right.png", Texture.class), 5f));
 		gameScreen.addLayer(new BackgroundLayer(postal.assetManager.get("sprites/background_1_1_left.png", Texture.class), postal.assetManager.get("sprites/background_1_1_right.png", Texture.class), 1.2f));
+		
+		gameScreen.addHudObject(new HudScore(gameScreen));
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,11 +25,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.bioh.postal.Postal;
 import com.bioh.postal.controllers.BackgroundCameraController;
 import com.bioh.postal.controllers.GameCameraController;
+import com.bioh.postal.controllers.HudCameraController;
 import com.bioh.postal.controllers.ParticleController;
 import com.bioh.postal.levelbuilders.GenericLevelBuilder;
 import com.bioh.postal.levelbuilders.LevelBuilder1;
 import com.bioh.postal.levelbuilders.LevelBuilder2;
 import com.bioh.postal.objects.BackgroundLayer;
+import com.bioh.postal.objects.GenericHudObject;
 import com.bioh.postal.objects.GenericObject;
 import com.bioh.postal.objects.Mothership;
 import com.bioh.postal.objects.Player;
@@ -43,6 +46,7 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	private GenericLevelBuilder levelBuilder;
 	private GameCameraController gameCameraController;
 	private BackgroundCameraController backgroundCameraController;
+	private HudCameraController hudCameraController;
 	private ParticleController particleController;
 	private BodyLoader loader;
 	private Postal postal;
@@ -59,8 +63,8 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 
 	private ArrayList<GenericObject> objects = new ArrayList<GenericObject>();
 	private ArrayList<BackgroundLayer> backgroundLayers = new ArrayList<BackgroundLayer>();
+	private ArrayList<GenericHudObject> hudObjects = new ArrayList<GenericHudObject>();
 
-	private BitmapFont font;
 
 	public GameScreen(int level){
 
@@ -106,10 +110,9 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 
 		gameCameraController = new GameCameraController(this);
 		backgroundCameraController = new BackgroundCameraController(this);
+		hudCameraController = new HudCameraController(this);
 
 		score = 0;
-
-		font = new BitmapFont();
 
 	}
 
@@ -175,38 +178,46 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 	    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 	    //start background draw
-	    backgroundBatch.setProjectionMatrix(backgroundCameraController.getCamera().combined);
-	    backgroundBatch.begin();
-	    for (int i = 0; i < backgroundLayers.size(); i++){
-			backgroundLayers.get(i).draw(backgroundBatch);
-		}
-	    backgroundBatch.end(); 
+		    backgroundBatch.setProjectionMatrix(backgroundCameraController.getCamera().combined);
+		    backgroundBatch.begin();
+		    for (int i = 0; i < backgroundLayers.size(); i++){
+				backgroundLayers.get(i).draw(backgroundBatch);
+			}
+		    backgroundBatch.end(); 
 	    //end background draw
 
-	    //start map draw
-	    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
-	    tiledMapRenderer.render();
-		//renderer.render(world, gameCameraController.getCamera().combined);
+	    
+		//start map draw
+		    tiledMapRenderer.setView((OrthographicCamera) gameCameraController.getCamera());
+		    tiledMapRenderer.render();
+		    //renderer.render(world, gameCameraController.getCamera().combined);
 		//end map draw
 
+		
 		//start game draw
-		gameBatch.setProjectionMatrix(gameCameraController.getCamera().combined);
-		gameBatch.begin();
-		for (int i = 0; i < objects.size(); i++){
-			objects.get(i).draw(gameBatch);
-		}
-
-		float offsetX = gameCameraController.getCamera().viewportWidth * gameCameraController.getCamera().zoom/2 - 10;
-		float offsetY = gameCameraController.getCamera().viewportHeight * gameCameraController.getCamera().zoom/2 - 20;
-
-		// Draw score
-		font.draw(gameBatch, score.toString(), gameCameraController.getCamera().position.x - offsetX, gameCameraController.getCamera().position.y - offsetY);
-
-		//draw particles
-		particleController.draw(gameBatch);
-		gameBatch.end();
-
+			gameBatch.setProjectionMatrix(gameCameraController.getCamera().combined);
+			gameBatch.begin();
+			for (int i = 0; i < objects.size(); i++){
+				objects.get(i).draw(gameBatch);
+			}
+	
+			float offsetX = gameCameraController.getCamera().viewportWidth * gameCameraController.getCamera().zoom/2 - 10;
+			float offsetY = gameCameraController.getCamera().viewportHeight * gameCameraController.getCamera().zoom/2 - 20;
+			
+			//draw particles
+			particleController.draw(gameBatch);
+			gameBatch.end();
 		//end game draw
+			
+		
+		//start hud draw
+			hudBatch.setProjectionMatrix(hudCameraController.getCamera().combined);
+			hudBatch.begin();
+			for (int i = 0; i < hudObjects.size(); i++){
+				hudObjects.get(i).draw(hudBatch);
+			}
+			hudBatch.end();
+		//end hud draw
 
 	}
 
@@ -216,6 +227,10 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 
 	public void incrementScore() {
 		score++;
+	}
+	
+	public Integer getScore(){
+		return score;
 	}
 
 	public Map getMap(){
@@ -232,6 +247,14 @@ public class GameScreen extends GenericScreen implements InputProcessor{
 
 	public void addLayer(BackgroundLayer layer){
 		backgroundLayers.add(layer);
+	}
+	
+	public void addHudObject(GenericHudObject object){
+		hudObjects.add(object);
+	}
+	
+	public Camera getHudCamera(){
+		return hudCameraController.getCamera();
 	}
 
 	public void addParticleEffect(ParticleEffect effect){

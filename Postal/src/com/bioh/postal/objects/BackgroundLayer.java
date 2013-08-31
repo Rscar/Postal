@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bioh.postal.Postal;
 
-public class BackgroundLayer {
+public class BackgroundLayer{
 	
 	private Postal postal;
 	private float depth;
@@ -36,4 +36,5 @@ public class BackgroundLayer {
 		spriteLeft.draw(batch);
 		spriteRight.draw(batch);
 	}
+
 }

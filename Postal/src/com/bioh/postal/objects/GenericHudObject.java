@@ -2,14 +2,11 @@ package com.bioh.postal.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public abstract class GenericObject{
+public abstract class GenericHudObject{
 	
 	public boolean flaggedForDelete = false;
-	protected Body body;
+	public boolean isButton = false;
 	protected Sprite sprite;
 	
 	public abstract void update();
@@ -19,8 +16,5 @@ public abstract class GenericObject{
 	public Sprite getSprite() {
 		return sprite;
 	};
-	
-	public Body getBody() {
-		return body;
-	}
 }
+
